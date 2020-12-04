@@ -1,4 +1,8 @@
-from src import biggerFish
+import ctypes
+MessageBox = ctypes.windll.user32.MessageBoxW
+MessageBox(None, 'Big fish game', 'Window title', 0)
 
-biggerFish = biggerFish.BiggerFish()
-biggerFish.run_game()
+print("Hola, soy pez grande")
+print("Hello World and David")
+# ble ble comment
+# I love your comment Andy
