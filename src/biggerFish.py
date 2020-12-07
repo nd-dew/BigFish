@@ -9,6 +9,9 @@ class BiggerFish:
         self.screen= pygame.display.set_mode(self.settings.screen_size)
         pygame.display.set_caption('Bigger Fish')
 
+        logo = pygame.image.load(self.settings.logo_path)
+        pygame.display.set_icon(logo)
+
     def run_game(self):
         self.screen.fill(self.settings.bg_color)
         pygame.display.flip()
