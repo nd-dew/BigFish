@@ -1,3 +1,7 @@
 # ignore virtual environment 
 venv/
+# ignore pycharm files
 .idea/
+# ignore  pycaches
+src/__pycache__/
+__pycache__/
