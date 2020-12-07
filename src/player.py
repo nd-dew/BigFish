@@ -17,8 +17,8 @@ class Player():
     def check_keys_and_move(self):
         keys = pygame.key.get_pressed()  # checking pressed key
         if keys[pygame.K_LEFT]:
-            x_transition = -1
+            x_transition = -2
             self.move_player([x_transition, 0])
         elif keys[pygame.K_RIGHT]:
-            x_transition =  1
+            x_transition =  2
             self.move_player([x_transition, 0])

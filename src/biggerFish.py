@@ -15,6 +15,8 @@ class BiggerFish:
         self.screen = pygame.display.set_mode(self.settings.screen_size)
         self.running= True
 
+        self.clock = pygame.time.Clock()
+
     def handle_key_event(self, event_key):
         if event_key == pygame.K_ESCAPE:
             self.running = False
@@ -42,3 +44,4 @@ class BiggerFish:
                     self.handle_key_event(event.key)
 
             pygame.display.update()
+            self.clock.tick(120)
