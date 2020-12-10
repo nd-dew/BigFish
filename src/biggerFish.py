@@ -16,11 +16,17 @@ class BiggerFish:
 
         self.screen = pygame.display.set_mode(self.settings.screen_size)
         self.running= True
+        self.score=0
 
         self.clock = pygame.time.Clock()
 
         self.player= playerFish.Player()
+        self.enemies=[]
 
+    def spawn():
+        #create instance of enemy and append local list
+        pass
+        
 
     def check_events(self):
         for event in pygame.event.get():
@@ -42,6 +48,7 @@ class BiggerFish:
     def screen_update(self):
         self.screen.fill(self.settings.bg_color)
         # blit fish on the screen
+        # blit enemies in the screen (iterate over self.enemies )
         pygame.display.flip() # TODO learn about flip/blit
 
     def run_game(self): 
