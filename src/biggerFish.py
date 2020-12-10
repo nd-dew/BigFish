@@ -28,9 +28,14 @@ class BiggerFish:
                 self.running= False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
-                    self.player.move("right")
+                    self.player.move("right")# Also animate in here or in inside of move
                 elif event.key == pygame.K_RIGHT:
                     self.player.move("left")
+            elif event.type == pygame.KEYUP:    
+                elif event.key == pygame.K_RIGHT:
+                    self.player.move("stop")
+                elif event.key == pygame.K_RIGHT:
+                    self.player.move("stop")
 
         
 
