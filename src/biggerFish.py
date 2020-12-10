@@ -4,6 +4,8 @@ from src import settings
 from src import player as playerFish
 
 class BiggerFish:
+    """
+    """
     def __init__(self):
         pygame.init()
         self.settings= settings.Settings()
@@ -17,31 +19,29 @@ class BiggerFish:
 
         self.clock = pygame.time.Clock()
 
-    def handle_key_event(self, event_key):
-        if event_key == pygame.K_ESCAPE:
-            self.running = False
-
-    def run_game(self):
-        self.screen.fill(self.settings.bg_color)
-        pygame.display.flip()
         self.player= playerFish.Player()
 
-        while self.running: # main game loop
-            # DRAW BACKGROUND
-            self.screen.fill(self.settings.bg_color)
 
-            # Move Player
-            self.player.check_keys_and_move()
-            # DRAW PLAYER
-            self.player.draw(self.screen)
+    def check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or event.type == pygame.K_ESCAPE:
+                self.running= False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    self.player.move("right")
+                elif event.key == pygame.K_RIGHT:
+                    self.player.move("left")
 
-            # EVENTS
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    self.handle_key_event(event.key)
+        
 
-            pygame.display.update()
-            self.clock.tick(120)
+    def screen_update(self):
+        self.screen.fill(self.settings.bg_color)
+        # blit fish on the screen
+        pygame.display.flip() # TODO learn about flip/blit
+
+    def run_game(self): 
+        while self.running:
+            pass 
+            # self.check events()
+            # self.player.upate (calulate pos)
+            # self.screen_update (render player enemys etc on the screen)
