@@ -5,6 +5,7 @@ class Settings:
         self.screen_size=(self.screen_width, self.screen_height)
 
         self.bg_color= (10,10,10)
+        self.bg_image= "image path"
 
         self.logo_path="resources/images/logo_shark.png"
 
