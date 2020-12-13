@@ -21,6 +21,12 @@ class BiggerFish:
         self.player = player.Player(self)  # player instance
         self.running = True
 
+    def run_game(self):
+        while self.running:  # Start of the game's main loop
+            self.check_events()  # Event loop
+            self.player.update()  # Checking the update method in PLAYER each loop.
+            self.screen_update()  # Updating screen
+
     def spawn(self):
         # create instance of enemy and append local list
         pass
@@ -45,9 +51,3 @@ class BiggerFish:
         self.player.blit_player()  # drawing our fish on top of our background
         # blit enemies in the screen (iterate over self.enemies )
         pygame.display.flip()  # TODO learn about flip/blit
-
-    def run_game(self):
-        while self.running:  # Start of the game's main loop
-            self.check_events()  # Event loop
-            self.player.update()  # Checking the update method in PLAYER each loop.
-            self.screen_update()  # Updating screen
