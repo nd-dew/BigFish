@@ -1,4 +1,4 @@
-import sys
+import random
 import pygame
 from src import settings
 from src import player
@@ -34,6 +34,8 @@ class BiggerFish:
 
     def check_events(self):
         for event in pygame.event.get():
+            
+            # KEYBOARD 
             if event.type == pygame.QUIT or event.type == pygame.K_ESCAPE:
                 self.running = False
             elif event.type == pygame.KEYDOWN:  # Check for events when a keypress is done
@@ -52,3 +54,4 @@ class BiggerFish:
         self.player.blit_player()  # drawing our fish on top of our background
         # blit enemies in the screen (iterate over self.enemies )
         pygame.display.flip()  # TODO change to update
+

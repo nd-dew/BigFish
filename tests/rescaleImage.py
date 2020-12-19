@@ -1,11 +1,13 @@
 import pygame as pg
 
 pg.init()
-screen = pg.display.set_mode([600, 600])
+screen = pg.display.set_mode([1000, 1000])
 fish_surface= pg.image.load('../resources/images/someFish540x540.png').convert()
+
 
 fish_surface_rescaled= pg.transform.scale(fish_surface, [300,300])
 fish_surface_rescaled2= pg.transform.scale(fish_surface, [600,600])
+fish_surface_rescaled3= pg.transform.scale(fish_surface_rescaled, [1000,1000])
 
 running=True
 i=0
@@ -20,7 +22,7 @@ while running:
     if i < 10e2:
         screen.blit(fish_surface, [0, 0])
     elif i > 10e2:
-        screen.blit(fish_surface_rescaled, [0,0])
+        screen.blit(fish_surface_rescaled3, [0,0])
         if i > 2*10e2:
             i=0
 
