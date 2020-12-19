@@ -9,8 +9,9 @@ class Player():
             left = 2
             right = 3
 
-        self.speed = 1
-        self.size = [int(48*2), int(48*2)] # [width, height]
+        self.speed = 3
+        self.size = [48, 48] # [width, height]
+        self.sizes=[[48, 48],[60, 60],[100, 100],[120, 120],[140, 140]]
 
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
