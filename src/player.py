@@ -2,15 +2,27 @@ import pygame
 
 class Player():
     def __init__(self, game):
+        self.speed = 1
+        self.size = [int(48*2), int(48*2)] # [width, height]
+
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
 
-        self.img = pygame.image.load("resources/images/sprite_sheets/tile037.png") # base image
+        # Getting player sprites
+        self.sprites={}
+        self.sprites['steady'] = pygame.image.load("resources/images/sprite_sheets/tile037.png").convert()
+        self.sprites['tailRight'] = pygame.image.load("resources/images/sprite_sheets/tile036.png").convert()
+        self.sprites['tailLeft'] = pygame.image.load("resources/images/sprite_sheets/tile038.png").convert()
+
+        # Initial image rescaling
+        self.img = self.sprites['steady']
+        self.img = pygame.transform.scale(self.img,  self.size)
         self.rect = self.img.get_rect()
+
+        # Setting initial position
         self.rect.midbottom = self.screen_rect.midbottom # midbottom point of the screen is set to be equal with  midbnottom point of the player
 
-        self.speed = 1
-        self.size = 0
+
 
         self.direction = "stop" # initial movement direction set to "stop"
 
