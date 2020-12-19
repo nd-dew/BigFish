@@ -26,6 +26,7 @@ class BiggerFish:
             self.check_events()  # Event loop
             self.player.update()  # Checking the update method in PLAYER each loop.
             self.screen_update()  # Updating screen
+            self.clock.tick(60)
 
     def spawn(self):
         # create instance of enemy and append local list
@@ -50,4 +51,4 @@ class BiggerFish:
         self.screen.fill(self.settings.bg_color)  # Redrawing the background each pass
         self.player.blit_player()  # drawing our fish on top of our background
         # blit enemies in the screen (iterate over self.enemies )
-        pygame.display.flip()  # TODO learn about flip/blit
+        pygame.display.flip()  # TODO change to update
