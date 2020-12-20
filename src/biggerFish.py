@@ -4,7 +4,7 @@ from src import settings
 from src import player
 from src.state import State
 from src.controls import Controls
-
+from src.sprite import Sprite
 
 class BiggerFish:
     def __init__(self):
@@ -27,6 +27,8 @@ class BiggerFish:
         
         self.bg_surface= pygame.image.load('resources/images/under_the_sea.png')
         self.bg_surface= pygame.transform.scale(self.bg_surface, self.settings.screen_size)
+
+        self.bubble=Sprite('resources/images/sprite_sheets/water_bubbles/water_bubbles.xml', [387,290])
 
     def run_game(self):
         while self.running:  # Start of the game's main loop
@@ -69,4 +71,5 @@ class BiggerFish:
         self.screen.blit(self.bg_surface, [0,0])
         self.player.blit_player()  # drawing our fish on top of our background
         # blit enemies in the screen (iterate over self.enemies )
+        self.bubble.blit(self.screen)
         pygame.display.flip()  # TODO change to update
