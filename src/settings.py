@@ -8,4 +8,5 @@ class Settings:
         # self.bg_image = "image path"
 
         self.logo_path = "resources/images/logo_shark.png"
+        self.FPS = 10
 
