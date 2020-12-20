@@ -2,6 +2,7 @@ import random
 import pygame
 from src import settings
 from src import player
+from src.state import State
 
 
 class BiggerFish:
@@ -29,7 +30,7 @@ class BiggerFish:
             self.player.update()  # Checking the update method in PLAYER each loop.
             self.screen_update()  # Updating screen
             self.clock.tick(self.settings.FPS)
-            print(self.controls)
+            print(self.controls) # DEBUG
 
     def spawn(self):
         # create instance of enemy and append local list
@@ -84,5 +85,15 @@ class BiggerFish:
 
         def left_up(self):
             self.keyboard["left"]=False
+
+        def what_fish_should_do(self):
+            if self.keyboard['right'] and not self.keyboard['left']:
+                return State.right
+            elif self.keyboard['left'] and not self.keyboard['right']:
+                return State.left
+            elif self.keyboard['left'] and self.keyboard['right']:
+                return State.stop
+            else:
+                return State.stop
 
 
