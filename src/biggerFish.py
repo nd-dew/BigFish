@@ -3,6 +3,7 @@ import pygame
 from src import settings
 from src import player
 from src.state import State
+from src.controls import Controls
 
 
 class BiggerFish:
@@ -22,7 +23,7 @@ class BiggerFish:
         self.player = player.Player(self)  # player instance
         self.running = True
 
-        self.controls= self.Controls()
+        self.controls= Controls()
 
     def run_game(self):
         while self.running:  # Start of the game's main loop
@@ -66,34 +67,34 @@ class BiggerFish:
         # blit enemies in the screen (iterate over self.enemies )
         pygame.display.flip()  # TODO change to update
 
-    class Controls():
-        def __init__(self):
-            self.keyboard={'right':False,
-                           'left': False,}
-
-        def __str__(self):
-            return str(self.keyboard)
-
-        def right_down(self):
-            self.keyboard["right"]=True
-
-        def left_down(self):
-            self.keyboard["left"]=True
-
-        def right_up(self):
-            self.keyboard["right"]=False
-
-        def left_up(self):
-            self.keyboard["left"]=False
-
-        def what_fish_should_do(self):
-            if self.keyboard['right'] and not self.keyboard['left']:
-                return State.right
-            elif self.keyboard['left'] and not self.keyboard['right']:
-                return State.left
-            elif self.keyboard['left'] and self.keyboard['right']:
-                return State.stop
-            else:
-                return State.stop
+    # class Controls():
+    #     def __init__(self):
+    #         self.keyboard={'right':False,
+    #                        'left': False,}
+    #
+    #     def __str__(self):
+    #         return str(self.keyboard)
+    #
+    #     def right_down(self):
+    #         self.keyboard["right"]=True
+    #
+    #     def left_down(self):
+    #         self.keyboard["left"]=True
+    #
+    #     def right_up(self):
+    #         self.keyboard["right"]=False
+    #
+    #     def left_up(self):
+    #         self.keyboard["left"]=False
+    #
+    #     def what_fish_should_do(self):
+    #         if self.keyboard['right'] and not self.keyboard['left']:
+    #             return State.right
+    #         elif self.keyboard['left'] and not self.keyboard['right']:
+    #             return State.left
+    #         elif self.keyboard['left'] and self.keyboard['right']:
+    #             return State.stop
+    #         else:
+    #             return State.stop
 
 
