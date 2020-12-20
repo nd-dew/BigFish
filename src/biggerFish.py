@@ -27,7 +27,7 @@ class BiggerFish:
     def run_game(self):
         while self.running:  # Start of the game's main loop
             self.check_events()  # Event loop
-            self.player.update()  # Checking the update method in PLAYER each loop.
+            self.player.update(self.controls.what_fish_should_do())  # Checking the update method in PLAYER each loop.
             self.screen_update()  # Updating screen
             self.clock.tick(self.settings.FPS)
             print(self.controls) # DEBUG

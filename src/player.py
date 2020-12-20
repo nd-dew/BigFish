@@ -1,13 +1,14 @@
 from enum import Enum
 import pygame
+from src.state import State
 
 class Player():
 
     def __init__(self, game):
-        class State(Enum):
-            stop = 1
-            left = 2
-            right = 3
+        # class State(Enum):
+        #     stop = 1
+        #     left = 2
+        #     right = 3
 
         self.speed = 5
         self.size = [48, 48] # [width, height]
@@ -37,6 +38,7 @@ class Player():
         self.change_size(3)
 
     def update(self):
+
         if self.direction == "right" and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
@@ -46,6 +48,18 @@ class Player():
         if self.direction == "stop": # to rethink
             self.rect.x += 0
             self.img = self.sprites["steady"]
+
+    def update(self, controls_state):
+
+        if controls_state == State.stop:
+            self.img = self.sprites["steady"]
+        elif controls_state == State.right  and self.rect.right < self.screen_rect.right:
+            self.rect.x += self.speed
+            self.img = self.sprites["tailLeft"]
+        elif controls_state == State.left and self.rect.left > self.screen_rect.left:
+            self.rect.x -= self.speed
+            self.img = self.sprites["tailRight"]
+
 
     def blit_player(self):
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
