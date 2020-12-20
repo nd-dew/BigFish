@@ -14,17 +14,17 @@ class Enemy():
         random_enemy = randrange(0,3)
 
         if random_enemy == 0:
-            self.sprites.append(pygame.image.load("resources\images\enemy1.png"))
-            self.sprites.append(pygame.image.load("resources\images\enemy2.png"))
-            self.sprites.append(pygame.image.load("resources\images\enemy3.png"))
+            self.sprites.append(pygame.image.load("resources/images/enemy1.png"))
+            self.sprites.append(pygame.image.load("resources/images/enemy2.png"))
+            self.sprites.append(pygame.image.load("resources/images/enemy3.png"))
         elif random_enemy == 1:
-            self.sprites.append(pygame.image.load("resources\images\enemy4.png"))
-            self.sprites.append(pygame.image.load("resources\images\enemy5.png"))
-            self.sprites.append(pygame.image.load("resources\images\enemy6.png"))
+            self.sprites.append(pygame.image.load("resources/images/enemy4.png"))
+            self.sprites.append(pygame.image.load("resources/images/enemy5.png"))
+            self.sprites.append(pygame.image.load("resources/images/enemy6.png"))
         else:
-            self.sprites.append(pygame.image.load("resources\images\enemy7.png"))
-            self.sprites.append(pygame.image.load("resources\images\enemy8.png"))
-            self.sprites.append(pygame.image.load("resources\images\enemy9.png"))
+            self.sprites.append(pygame.image.load("resources/images/enemy7.png"))
+            self.sprites.append(pygame.image.load("resources/images/enemy8.png"))
+            self.sprites.append(pygame.image.load("resources/images/enemy9.png"))
 
         self.current_sp = 0
 

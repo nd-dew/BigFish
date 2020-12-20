@@ -53,7 +53,7 @@ class Player():
 
         if controls_state == State.stop:
             self.img = self.sprites["steady"]
-        elif controls_state == State.right  and self.rect.right < self.screen_rect.right:
+        elif controls_state == State.right and self.rect.right < self.screen_rect.right:
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
         elif controls_state == State.left and self.rect.left > self.screen_rect.left:
