@@ -1,31 +1,53 @@
 from src.state import State
 
 class Controls():
+    """
+     Attributes
+    ----------
+    right : bool
+        current state of right arrow key True if pressed
+    left : bool
+        current state of left arrow key True if pressed
+    """
     def __init__(self):
-        self.keyboard = {'right': False,
-                         'left': False, }
+        self.right=False
+        self.left=False
 
     def __str__(self):
-        return str(self.keyboard)
+        return f'right={self.right}, left={self.left}'
 
     def right_down(self):
-        self.keyboard["right"] = True
+        self.right = True
 
     def left_down(self):
-        self.keyboard["left"] = True
+        self.left = True
 
     def right_up(self):
-        self.keyboard["right"] = False
+        self.right = False
 
     def left_up(self):
-        self.keyboard["left"] = False
+        self.left = False
+
 
     def what_fish_should_do(self):
-        if self.keyboard['right'] and not self.keyboard['left']:
+        """
+        Returns
+        -------
+        state : State(Enum) What player should do based on keyboard input
+        """
+
+        # Pressed right only
+        if self.right and not self.left:
             return State.right
-        elif self.keyboard['left'] and not self.keyboard['right']:
+
+        # Pressed left only
+        elif self.left and not self.right:
             return State.left
-        elif self.keyboard['left'] and self.keyboard['right']:
+
+        #Pressed both keys
+        elif self.left and self.right:
             return State.stop
+
+        #Nothhing pressed
         else:
             return State.stop
