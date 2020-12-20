@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:cedc83bd09bf64f6873ea153148c010e:a9d5a2ad1b67bc60449fc9016c2af98a:d154e38c9616a2989bb23ca37b42875c$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="water_bubble_sprite_sheet_exported.png" width="225" height="411">
+    <sprite n="water_buble_tile1.png" x="0" y="0" w="75" h="83"/>
+    <sprite n="water_buble_tile2.png" x="75" y="0" w="75" h="82"/>
+    <sprite n="water_buble_tile3.png" x="150" y="0" w="75" h="82"/>
+    <sprite n="water_buble_tile4.png" x="0" y="83" w="75" h="82"/>
+    <sprite n="water_buble_tile5.png" x="75" y="83" w="75" h="82"/>
+    <sprite n="water_buble_tile6.png" x="150" y="83" w="75" h="82"/>
+    <sprite n="water_buble_tile7.png" x="0" y="165" w="75" h="82"/>
+    <sprite n="water_buble_tile8.png" x="75" y="165" w="75" h="82"/>
+    <sprite n="water_buble_tile9.png" x="150" y="165" w="75" h="82"/>
+    <sprite n="water_buble_tile10.png" x="0" y="247" w="75" h="82"/>
+    <sprite n="water_buble_tile11.png" x="75" y="247" w="75" h="82"/>
+    <sprite n="water_buble_tile12.png" x="150" y="247" w="75" h="82"/>
+    <sprite n="water_buble_tile13.png" x="0" y="329" w="75" h="82"/>
+    <sprite n="water_buble_tile14.png" x="75" y="329" w="75" h="82"/>
+</TextureAtlas>
