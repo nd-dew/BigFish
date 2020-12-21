@@ -152,6 +152,8 @@ class Player():
         -------
         all_sizes_sprites : {int: {str: pygame.Surface, str: pygame.Surface, str: pygame.Surface}... }
             Dict containing all of possible images sets of player.
+
+        --- Andy's first implementation. Not used.
         """
 
         all_sizes_sprites={}

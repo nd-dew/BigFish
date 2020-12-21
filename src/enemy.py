@@ -17,20 +17,7 @@ class Enemy():
         self.sprites.append(pygame.image.load(game.settings.enemies[rand_index].img_path_R).convert())
         self.sprites.append(pygame.image.load(game.settings.enemies[rand_index].img_path_S).convert())
         self.sprites.append(pygame.image.load(game.settings.enemies[rand_index].img_path_L).convert())
-        """
-        if random_enemy == 0:
-            self.sprites.append(pygame.image.load(game.settings.enemies[0].img_path_R))
-            self.sprites.append(pygame.image.load(game.settings.enemies[0].img_path_S))
-            self.sprites.append(pygame.image.load(game.settings.enemies[0].img_path_L))
-        elif random_enemy == 1:
-            self.sprites.append(pygame.image.load("resources/images/enemy4.png"))
-            self.sprites.append(pygame.image.load("resources/images/enemy5.png"))
-            self.sprites.append(pygame.image.load("resources/images/enemy6.png"))
-        else:
-            self.sprites.append(pygame.image.load("resources/images/enemy7.png"))
-            self.sprites.append(pygame.image.load("resources/images/enemy8.png"))
-            self.sprites.append(pygame.image.load("resources/images/enemy9.png"))
-        """
+
         self.current_sp = 0
         self.img = self.sprites[self.current_sp]
         self.img = pygame.transform.scale(self.img,  self.size) # adjusting initial size
