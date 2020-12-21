@@ -16,11 +16,14 @@ class BiggerFish:
         icon = pygame.image.load(self.settings.logo_path)
         pygame.display.set_icon(icon)
         self.screen = pygame.display.set_mode(self.settings.screen_size)  # screen is a tuple of width and height
-        self.bg_img = pygame.image.load(self.settings.bg_img_path)
-        self.bg_img = pygame.transform.scale(self.bg_img, self.settings.screen_size)
 
+        # Background
+        self.current_bg_animation = 0
+        self.bg_surface = self.settings.bg_animation[self.current_bg_animation]
+        #self.bg_surface = pygame.transform.scale(self.bg_surface, self.settings.screen_size)
+
+        # Time variable
         self.clock = pygame.time.Clock()  # for frames per second/ delay?
-        #self.start_time = 0
 
         # Events ID generator, created to keep track of eventID
         # user event ID has to be between pygame.USEREVENT and pygame.NUMEVENTS
@@ -31,7 +34,7 @@ class BiggerFish:
         self.counter.addEvent(self.event_id_generator, 100)
 
         self.enemies = [] # array of enemies
-        self.spawn_rate = 2000 # initial spawn rate
+        self.spawn_rate = 1000 # initial spawn rate
         self.SPAWN_EVENT = pygame.USEREVENT # TODO use generator in here 'next( self.event_id_generator)'
         pygame.time.set_timer(self.SPAWN_EVENT, self.spawn_rate)
 
@@ -48,7 +51,7 @@ class BiggerFish:
             for enem in self.enemies: # Can be reduced with sprite.group
                 enem.update()
             for enem in self.enemies.copy(): # deleting enemies
-                if enem.rect.midbottom[1] >= self.settings.screen_height:
+                if enem.rect.midbottom[1] >= self.settings.screen_height + 50:
                     self.enemies.remove(enem)
             print(len(self.enemies)) # checking the size of the list
             self.screen_update()  # Updating screen
@@ -100,15 +103,23 @@ class BiggerFish:
 
     def screen_update(self):
         self.screen.fill(self.settings.bg_color)  # Redrawing the background each pass
-        self.screen.blit(self.bg_img, [0,0])
-        self.player.blit_player()  # drawing our fish on top of our background
+
+
+        self.current_bg_animation += 0.5
+        if self.current_bg_animation >= len(self.settings.bg_animation):
+            self.current_bg_animation = 0
+        self.bg_surface = self.settings.bg_animation[int(self.current_bg_animation)]
+        self.screen.blit(self.bg_surface, [0, 0])
+
+        # Draw enemies in the screen (iterate over the list of enemies)
         for enem in self.enemies: # Can be reduced with sprite.group
             enem.blit_enemy()
 
+        # Draw player on the screen
+        self.player.blit_player()  # drawing our fish on top of our background
+
         self.counter.blit(self.screen)
 
-        #self.enemy.blit_enemy()
-        # blit enemies in the screen (iterate over self.enemies )
         pygame.display.flip()  # TODO change to update
 
     class Counter():

@@ -1,3 +1,4 @@
+import pygame
 from src.enemyType import EnemyType
 
 class Settings:
@@ -21,12 +22,18 @@ class Settings:
     """
 
     def __init__(self):
-        self.screen_width = 600
-        self.screen_height = 600
+        self.screen_width = 500
+        self.screen_height = 500
         self.screen_size = (self.screen_width, self.screen_height)
 
         self.bg_color = (230, 230, 230)
-        self.bg_img_path = 'resources/images/under_the_sea.png'
+
+        # BACKGROUND SPRITE PICTURES
+        self.bg_animation = []
+        for i in range(0, 49):
+            string = 'resources/images/background/bg' + str(i) + '.png'
+            self.bg_animation.append(pygame.image.load(string))
+
 
         self.logo_path = "resources/images/logo_shark.png"
         self.FPS = 60
