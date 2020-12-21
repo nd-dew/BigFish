@@ -42,6 +42,10 @@ class BiggerFish:
             # self.player.update(self.controls.what_fish_should_do())  # Checking the update method in PLAYER each loop.
             for enem in self.enemies: # Can be reduced with sprite.group
                 enem.update()
+            for enem in self.enemies.copy(): # deleting enemies
+                if enem.rect.midbottom[1] >= self.settings.screen_height:
+                    self.enemies.remove(enem)
+            print(len(self.enemies)) # checking the size of the list
             self.screen_update()  # Updating screen
             self.clock.tick(self.settings.FPS)
             #self.start_time = pygame.time.get_ticks()
