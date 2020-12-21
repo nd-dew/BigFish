@@ -1,4 +1,6 @@
 from src.state import State
+from enum import Enum
+
 
 class Controls():
     """
@@ -11,8 +13,12 @@ class Controls():
     """
 
     def __init__(self):
-        self.right=False
-        self.left=False
+        self.right = False
+        self.left = False
+
+        #self.stop_ = 1
+        #self.left_ = 2
+        #self.right_ = 3
 
     def __str__(self):
         return f'right={self.right}, left={self.left}'
@@ -28,7 +34,6 @@ class Controls():
 
     def left_up(self):
         self.left = False
-
 
     def what_fish_should_do(self):
         """
@@ -47,10 +52,10 @@ class Controls():
         elif self.left and not self.right:
             return State.left
 
-        #Pressed both keys
+        # Pressed both keys
         elif self.left and self.right:
             return State.stop
 
-        #Nothhing pressed
+        # Nothing pressed
         else:
             return State.stop
