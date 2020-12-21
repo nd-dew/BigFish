@@ -20,11 +20,17 @@ class BiggerFish:
         self.clock = pygame.time.Clock()  # for frames per second/ delay?
         #self.start_time = 0
 
-        self.counter = self.Counter(self.screen)  # initializing counter
+        # Events ID generator, created to keep track of eventID
+        # user event ID has to be between pygame.USEREVENT and pygame.NUMEVENTS
+        self.event_id_generator= (id for id in range(pygame.USEREVENT+1, pygame.NUMEVENTS))
+
+        # Counter initialization
+        self.counter = self.Counter(self.screen)
+        self.counter.addEvent(self.event_id_generator, 100)
 
         self.enemies = [] # array of enemies
         self.spawn_rate = 2000 # initial spawn rate
-        self.SPAWN_EVENT = pygame.USEREVENT
+        self.SPAWN_EVENT = pygame.USEREVENT # TODO use generator in here 'next( self.event_id_generator)'
         pygame.time.set_timer(self.SPAWN_EVENT, self.spawn_rate)
 
         self.player = player.Player(self)  # player instance
@@ -39,7 +45,6 @@ class BiggerFish:
         while self.running:  # Start of the game's main loop
             self.check_events()  # Event loop
             self.player.update(self.controls.what_fish_should_do())  # Checking the update method in PLAYER each loop.
-            self.counter.update(random.randint(1,1000))
             self.screen_update()  # Updating screen
             self.clock.tick(self.settings.FPS)
             #self.start_time = pygame.time.get_ticks()
@@ -74,8 +79,14 @@ class BiggerFish:
                     self.player.direction = "stop"
                     self.controls.left_up()
 
-            if event.type == self.SPAWN_EVENT:
+            elif event.type == self.counter.event:
+                # increment counter up to 200
+                self.counter.update( (self.counter.points + 1)%200 )
+
+            if event.type == self.SPAWN_EVENT: # TODO change to elif
                 self.enemies.append(enemy.Enemy(self))
+
+
 
     def screen_update(self):
         self.screen.fill(self.settings.bg_color)  # Redrawing the background each pass
@@ -101,6 +112,15 @@ class BiggerFish:
             self.rect = self.img.get_rect()
 
             self._move_to_bottomright_of(self.screen)
+
+        def addEvent(self, generator, timeBetweenEvents):
+            """ add test event to increment counter every x miliseconds
+            """
+            self.event=next(generator)
+            pygame.time.set_timer(self.event, timeBetweenEvents)
+
+        def eventAction(self):
+            self.points = ( self.points + 13 + 100) % 100
 
         def update(self, points):
             self.points = points
