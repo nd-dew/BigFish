@@ -31,9 +31,9 @@ class BiggerFish:
         self.running = True
 
         self.controls= Controls()
-        
-        self.bg_surface= pygame.image.load('resources/images/under_the_sea.png')
-        self.bg_surface= pygame.transform.scale(self.bg_surface, self.settings.screen_size)
+
+        self.bg_img = pygame.image.load(self.settings.bg_img_path)
+        self.bg_img = pygame.transform.scale(self.bg_img, self.settings.screen_size)
 
     def run_game(self):
         while self.running:  # Start of the game's main loop
@@ -79,7 +79,7 @@ class BiggerFish:
 
     def screen_update(self):
         self.screen.fill(self.settings.bg_color)  # Redrawing the background each pass
-        self.screen.blit(self.bg_surface, [0,0])
+        self.screen.blit(self.bg_img, [0,0])
         self.player.blit_player()  # drawing our fish on top of our background
 
         for enem in self.enemies:

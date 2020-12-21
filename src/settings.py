@@ -23,7 +23,8 @@ class Settings:
         self.screen_size=(self.screen_width, self.screen_height)
 
         self.bg_color= (230, 230, 230)
-        # self.bg_image = "image path"
+
+        self.bg_img_path = 'resources/images/under_the_sea.png'
 
         self.logo_path = "resources/images/logo_shark.png"
         self.FPS = 60
