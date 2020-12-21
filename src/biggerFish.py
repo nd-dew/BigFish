@@ -39,6 +39,7 @@ class BiggerFish:
         while self.running:  # Start of the game's main loop
             self.check_events()  # Event loop
             self.player.update(self.controls.what_fish_should_do())  # Checking the update method in PLAYER each loop.
+            self.counter.update(random.randint(1,1000))
             self.screen_update()  # Updating screen
             self.clock.tick(self.settings.FPS)
             #self.start_time = pygame.time.get_ticks()
@@ -105,6 +106,7 @@ class BiggerFish:
             self.points = points
             self.img= self.font.render(str(self.points), False,  self.font_color, None)
             self.rect = self.img.get_rect()
+            self._move_to_bottomright_of(self.screen)
 
         def _move_to_bottomright_of(self, screen):
             self.rect.bottomright = self.screen.get_rect().bottomright
