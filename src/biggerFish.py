@@ -5,7 +5,10 @@ from src import player
 from src import enemy
 from src.state import State
 from src.controls import Controls
+import logging
+import time
 
+logging.basicConfig(filename='resources/logs/timeOfOneLoop.log', level=logging.INFO)
 
 class BiggerFish:
     def __init__(self):
@@ -40,8 +43,13 @@ class BiggerFish:
 
         self.controls= Controls()
 
+
     def run_game(self):
+        loopNumber = 0
+        elapsed=0
         while self.running:  # Start of the game's main loop
+            start = time.time()
+
             self.check_events()  # Event loop
             self.player.update()
             # self.player.update(self.controls.what_fish_should_do())  # Checking the update method in PLAYER each loop.
@@ -50,12 +58,27 @@ class BiggerFish:
             for enem in self.enemies.copy(): # deleting enemies
                 if enem.rect.midbottom[1] >= self.settings.screen_height:
                     self.enemies.remove(enem)
-            print(len(self.enemies)) # checking the size of the list
+            # print(len(self.enemies)) # checking the size of the list
             self.screen_update()  # Updating screen
-            self.clock.tick(self.settings.FPS)
+
             #self.start_time = pygame.time.get_ticks()
             # self.spawn()
             #print(self.controls) # DEBUG
+
+            # PERFORMANCE LOG START------------------------------------------------
+            elapsed += (time.time() - start)
+            loopNumber += 1
+
+            if loopNumber > 1000:
+                one_loop_time= elapsed / loopNumber
+                logging.info(f'{one_loop_time=} s {1 / one_loop_time} FPS possible')
+                print(f'{one_loop_time=} s {1 / one_loop_time} FPS possible')
+                loopNumber = 0
+                elapsed=0
+            # PERFORMANCE LOG END---------------------------------------------------
+
+            self.clock.tick(self.settings.FPS)
+
 
     # def spawn(self):
     #     if self.start_time > self.spawn_rate:
@@ -111,9 +134,11 @@ class BiggerFish:
         # blit enemies in the screen (iterate over self.enemies )
         pygame.display.flip()  # TODO change to update
 
-    class Counter():
+    class Counter:
+
+
         def __init__(self, parentScreen):
-            self.screen=parentScreen
+            self.screen = parentScreen
             self.points=0
             self.font = pygame.font.SysFont('Comic Sans MS', 30)
             self.font_color= pygame.Color('black')
@@ -129,6 +154,7 @@ class BiggerFish:
             pygame.time.set_timer(self.event, timeBetweenEvents)
 
         def eventAction(self):
+
             self.points = ( self.points + 13 + 100) % 100
 
         def update(self, points):
