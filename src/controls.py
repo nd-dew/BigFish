@@ -9,6 +9,7 @@ class Controls():
     left : bool
         current state of left arrow key True if pressed
     """
+
     def __init__(self):
         self.right=False
         self.left=False
@@ -31,6 +32,8 @@ class Controls():
 
     def what_fish_should_do(self):
         """
+        Analyses keyboard state and returns state in which player fish should be
+        
         Returns
         -------
         state : State(Enum) What player should do based on keyboard input

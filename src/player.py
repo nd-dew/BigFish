@@ -3,13 +3,47 @@ import pygame
 from src.state import State
 
 class Player():
+    """
+    Player object to hold all values describing player fish. Contains also methods to modify player attr.
+
+    Parameters
+    ----------
+    game : BiggerFish
+
+    Attributes
+    ----------
+    speed : int
+        How fast player moves per tick, (TODO would be nice to base it on time not framerate)
+    size : [int, int]
+        Actual size of displayed player image in pixels. [width, height]
+    sizes : [[int,int], [int,int], [int,int], ...]
+        List of all possible sizes player can take.
+    screen : pygame.surface
+        local copy of main screen used in main game class (DO we really need it)
+    screen_rect: pygame.Rect
+        rect structure derived from main screen, used in boundary case calculations
+    all_sizes_sprites: {int: {str: pygame.Surface, str: pygame.Surface, str: pygame.Surface}... }
+       Dict containing all of possible images of player. Calculated in the beginning of the game.
+       Data Structure Explained:
+           {level_1 : dict_with_sprites, level_2 : dict_with_sprites, level_3 : dict_with_sprites...}
+            it is a dictionary of dictionaries. Keys in outer dictionary are integers (so far). While in the inner dicts
+            called in here 'dict_with_sprites' we find rescaled sprites.
+            Structure of inner dict called in here dict_with_sprites looks like this:
+            {'steady': pygame.Surface, 'tailRight': pygame.Surface, 'tailLeft': pygame.Surface}
+    sprites : {'steady': pygame.Surface, 'tailRight': pygame.Surface, 'tailLeft': pygame.Surface}
+        current set of sprites used to display animations.
+    img : pygame.Surface
+        current image to blit on screen
+    rect : pygame.Rect
+        rect corresponding to self.img, used to describe position in bliting
+    direction : str
+        deprecated, Used in past to represent current state of player
+    currentState : State
+        instance of imported enum struct, describes current state in which player is
+    """
+
 
     def __init__(self, game):
-        # class State(Enum):
-        #     stop = 1
-        #     left = 2
-        #     right = 3
-
         self.speed = 5
         self.size = [48, 48] # [width, height]
         self.sizes=[[48, 48],[60, 60],[100, 100],[120, 120],[140, 140]]
@@ -35,10 +69,12 @@ class Player():
         self.direction = "stop" # initial movement direction set to "stop"
         self.currentState= State.stop
 
-        self.change_size(3)
+        self.change_size(3) # Used for testing, not needed in here
 
     def update(self):
+        """ deprecated
 
+        """
         if self.direction == "right" and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
@@ -50,6 +86,14 @@ class Player():
             self.img = self.sprites["steady"]
 
     def update(self, controls_state):
+        """ update current player actions attr/flags according to given state
+
+        Parameters
+        ----------
+        controls_state : State
+            desired state in which player would like to be
+
+        """
 
         if controls_state == State.stop:
             self.img = self.sprites["steady"]
@@ -62,11 +106,20 @@ class Player():
 
 
     def blit_player(self):
+        """
+        Render player img on screen surface
+
+        """
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
 
     def change_size(self, level):
         """
-        :param level: int, specify which dict of sprites should be used in
+        Modify current sprite set into choosen one.
+
+        Parameters
+        ----------
+        level : int
+            specify which dict of sprites should be used (among all_sizes_sprites)
         """
         self.sprites= self.all_sizes_sprites[level]
         position_tmp_midbottom= self.rect.midbottom
@@ -74,9 +127,18 @@ class Player():
         self.rect.midbottom= position_tmp_midbottom
 
     def _calculate_surfaces_from_sizes(self, sizes):
+        """ Calculates all surfaces by rescaling to given sizes. Should be executed in the initialization
+
+        Parameters
+        ----------
+        sizes : [[int, int], [int, int], [int, int]...]
+
+        Returns
+        -------
+        all_sizes_sprites : {int: {str: pygame.Surface, str: pygame.Surface, str: pygame.Surface}... }
+            Dict containing all of possible images sets of player.
         """
-        Calculates all surfaces by rescaling to given sizes. Should be executed in the initialization
-        """
+
         all_sizes_sprites={}
         # TODO those paths should be in one place
         steady= pygame.image.load("resources/images/sprite_sheets/tile037.png").convert()
