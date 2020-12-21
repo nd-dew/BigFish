@@ -114,7 +114,7 @@ class Player():
 
     def change_size(self, level):
         """
-        Modify current sprite set into choosen one.
+        Modify current sprite set into chosen one.
 
         Parameters
         ----------
