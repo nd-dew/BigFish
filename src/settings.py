@@ -38,8 +38,8 @@ class Settings:
 
         # ENEMIES
         """(speed, width, height, path_R, path_S, path_L)"""
-        red_fish = EnemyType(15, width=28, height=96, path_R="resources/images/enemy2.png", path_S="resources/images/enemy1.png", path_L="resources/images/enemy3.png")
-        orange_fish = EnemyType(15, width=24, height=48, path_R="resources/images/enemy5.png", path_S="resources/images/enemy4.png", path_L="resources/images/enemy6.png")
-        green_fish = EnemyType(15, width=24, height=48, path_R="resources/images/enemy8.png", path_S="resources/images/enemy7.png", path_L="resources/images/enemy9.png")
+        red_fish = EnemyType(15, width=48, height=48, path_R="resources/images/enemy2.png", path_S="resources/images/enemy1.png", path_L="resources/images/enemy3.png")
+        green_fish = EnemyType(15, width=60, height=60, path_R="resources/images/enemy5.png", path_S="resources/images/enemy4.png", path_L="resources/images/enemy6.png")
+        brown_fish = EnemyType(15, width=100, height=100, path_R="resources/images/enemy8.png", path_S="resources/images/enemy7.png", path_L="resources/images/enemy9.png")
 
-        self.enemies = [red_fish, orange_fish, green_fish]
+        self.enemies = [red_fish, green_fish, brown_fish]

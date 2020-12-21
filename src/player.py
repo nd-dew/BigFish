@@ -46,11 +46,14 @@ class Player():
     def __init__(self, game):
         self.speed = 5
         self.size = [48, 48] # [width, height]
-        self.sizes=[[48, 48],[60, 60],[100, 100],[120, 120],[140, 140]]
+        self.sizes = [[48, 48], [60, 60], [100, 100], [120, 120], [140, 140]]
+        self.size_level = 0 # initial size level
 
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
         self.all_sizes_sprites= self._calculate_surfaces_from_sizes(self.sizes)
+
+        self.change_size(0)  # Used for testing, not needed in here
 
         # Getting player sprites
         self.sprites={}
@@ -60,7 +63,8 @@ class Player():
 
         # Initial image rescaling
         self.img = self.sprites['steady']
-        self.img = pygame.transform.scale(self.img,  self.size)
+        self.scale_tuple = (self.sizes[self.size_level][0], self.sizes[self.size_level][1])
+        self.img = pygame.transform.scale(self.img, self.scale_tuple)
         self.rect = self.img.get_rect()
 
         # Setting initial position
@@ -69,11 +73,10 @@ class Player():
         self.direction = "stop" # initial movement direction set to "stop"
         self.currentState= State.stop
 
-        self.change_size(3) # Used for testing, not needed in here
+        self.change_size(4) # Used for testing, not needed in here
 
     def update(self):
         """ deprecated
-
         """
         if self.direction == "right" and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
@@ -97,18 +100,20 @@ class Player():
 
         if controls_state == State.stop:
             self.img = self.sprites["steady"]
+            self.img = pygame.transform.scale(self.img, self.scale_tuple)
         elif controls_state == State.right and self.rect.right < self.screen_rect.right:
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
+            self.img = pygame.transform.scale(self.img, self.scale_tuple)
         elif controls_state == State.left and self.rect.left > self.screen_rect.left:
             self.rect.x -= self.speed
             self.img = self.sprites["tailRight"]
+            self.img = pygame.transform.scale(self.img, self.scale_tuple)
 
 
     def blit_player(self):
         """
         Render player img on screen surface
-
         """
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
 
@@ -121,10 +126,14 @@ class Player():
         level : int
             specify which dict of sprites should be used (among all_sizes_sprites)
         """
+        """
         self.sprites= self.all_sizes_sprites[level]
         position_tmp_midbottom= self.rect.midbottom
         self.rect= self.sprites["steady"].get_rect()
         self.rect.midbottom= position_tmp_midbottom
+        """
+        self.size_level = level
+
 
     def _calculate_surfaces_from_sizes(self, sizes):
         """ Calculates all surfaces by rescaling to given sizes. Should be executed in the initialization
