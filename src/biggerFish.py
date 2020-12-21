@@ -20,7 +20,7 @@ class BiggerFish:
         self.clock = pygame.time.Clock()  # for frames per second/ delay?
         #self.start_time = 0
 
-        self.score = 0  # initializing counter
+        self.counter = self.Counter()  # initializing counter
 
         self.enemies = [] # array of enemies
         self.spawn_rate = 2000 # initial spawn rate
@@ -48,7 +48,6 @@ class BiggerFish:
     # def spawn(self):
     #     if self.start_time > self.spawn_rate:
     #         self.enemies.append(enemy.Enemy(self))
-
 
     def check_events(self):
         for event in pygame.event.get():
@@ -85,6 +84,24 @@ class BiggerFish:
         for enem in self.enemies:
             enem.blit_enemy()
 
-        #self.enemy.blit_enemy()
+        # self.enemy.blit_enemy()
         # blit enemies in the screen (iterate over self.enemies )
         pygame.display.flip()  # TODO change to update
+
+    class Counter():
+        def __init__(self):
+            self.points=0
+            self.font = pygame.font.SysFont('Comic Sans MS', 30)
+            self.font_color= pygame.Color('black')
+            self.img= self.font.render(str(self.points), False,  self.font_color, None)
+            self.rect = self.img.get_rect()
+
+
+        def update(self, points):
+            self.points = points
+            self.img= self.font.render(str(self.points), False,  self.font_color, None)
+            self.rect = self.img.get_rect()
+
+
+        def blit(self, screen):
+            screen.blit(self.img, self.rect)

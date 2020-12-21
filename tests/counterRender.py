@@ -27,7 +27,7 @@ while running:
     screen.fill([50,100,50])  # Redrawing the background each pass
     counter_rect= counter_img.get_rect()
     counter_rect.bottomright= screen_rect.bottomright
-    screen.blit(counter_img, counter_rect.topleft)
+    screen.blit(counter_img, counter_rect)
     pygame.display.update()
 
 pygame.quit()
