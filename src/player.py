@@ -51,7 +51,7 @@ class Player():
 
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
-        self.all_sizes_sprites= self._calculate_surfaces_from_sizes(self.sizes)
+        self.all_sizes_sprites = self._calculate_surfaces_from_sizes(self.sizes) #unused
 
         self.change_size(0)  # Used for testing, not needed in here
 
@@ -91,6 +91,7 @@ class Player():
         else: # to rethink
             # self.rect.x += 0
             self.img = self.sprites["steady"]
+            self.img = pygame.transform.scale(self.img, self.size)
 
 
     # def update(self, controls_state):

@@ -41,7 +41,7 @@ class Enemy():
         self.rect.midbottom = (self.x_pos, self.y_pos)
 
     def update(self):
-        self.y_pos += 1
+        self.y_pos += self.speed
         self.sprite_image()
         self.rect.midbottom = (self.x_pos, self.y_pos)
 
