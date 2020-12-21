@@ -38,7 +38,8 @@ class BiggerFish:
     def run_game(self):
         while self.running:  # Start of the game's main loop
             self.check_events()  # Event loop
-            self.player.update(self.controls.what_fish_should_do())  # Checking the update method in PLAYER each loop.
+            self.player.update()
+            # self.player.update(self.controls.what_fish_should_do())  # Checking the update method in PLAYER each loop.
             for enem in self.enemies: # Can be reduced with sprite.group
                 enem.update()
             self.screen_update()  # Updating screen
@@ -63,19 +64,23 @@ class BiggerFish:
             # KEYBOARD INPUT
             elif event.type == pygame.KEYDOWN:  # Check for events when a keypress is done
                 if event.key == pygame.K_RIGHT:
-                    self.player.direction = "right"
-                    self.controls.right_down()
+                    # self.player.direction = "right"
+                    # self.controls.right_down()
+                    self.player.right = True
                 elif event.key == pygame.K_LEFT:
-                    self.player.direction = "left"
-                    self.controls.left_down()
+                    # self.player.direction = "left"
+                    # self.controls.left_down()
+                    self.player.left = True
 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
-                    self.player.direction = "stop"
-                    self.controls.right_up()
+                    # self.player.direction = "stop"
+                    # self.controls.right_up()
+                    self.player.right = False
                 elif event.key == pygame.K_LEFT:
-                    self.player.direction = "stop"
-                    self.controls.left_up()
+                    # self.player.direction = "stop"
+                    # self.controls.left_up()
+                    self.player.left = False
 
             if event.type == self.SPAWN_EVENT:
                 # self.enemies.append(enemy.Enemy(self)) # adding enemies

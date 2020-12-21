@@ -47,7 +47,7 @@ class Player():
         self.speed = 5
         self.size = [48, 48] # [width, height]
         self.sizes = [[48, 48], [60, 60], [100, 100], [120, 120], [140, 140]]
-        self.size_level = 0 # initial size level
+        self.size_level = 0 # initial size level = first element of the sizes list
 
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
@@ -63,8 +63,8 @@ class Player():
 
         # Initial image rescaling
         self.img = self.sprites['steady']
-        self.scale_tuple = (self.sizes[self.size_level][0], self.sizes[self.size_level][1])
-        self.img = pygame.transform.scale(self.img, self.scale_tuple)
+        self.size = [self.sizes[self.size_level][0], self.sizes[self.size_level][1]]
+        self.img = pygame.transform.scale(self.img, self.size)
         self.rect = self.img.get_rect()
 
         # Setting initial position
@@ -73,22 +73,27 @@ class Player():
         self.direction = "stop" # initial movement direction set to "stop"
         self.currentState= State.stop
 
-        self.change_size(4) # Used for testing, not needed in here
+        self.right = False
+        self.left = False
 
     def update(self):
         """ deprecated
         """
-        if self.direction == "right" and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
+        # if self.direction == "right" and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
+        if self.right and not self.left and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
-        elif self.direction == "left" and self.rect.left > self.screen_rect.left:
+            self.img = pygame.transform.scale(self.img, self.size)
+        elif self.left and not self.right and self.rect.left > self.screen_rect.left:
             self.rect.x -= self.speed
             self.img = self.sprites["tailRight"]
-        if self.direction == "stop": # to rethink
-            self.rect.x += 0
+            self.img = pygame.transform.scale(self.img, self.size)
+        else: # to rethink
+            # self.rect.x += 0
             self.img = self.sprites["steady"]
 
-    def update(self, controls_state):
+
+    # def update(self, controls_state):
         """ update current player actions attr/flags according to given state
 
         Parameters
@@ -97,19 +102,19 @@ class Player():
             desired state in which player would like to be
 
         """
-
+        """
         if controls_state == State.stop:
             self.img = self.sprites["steady"]
-            self.img = pygame.transform.scale(self.img, self.scale_tuple)
+            self.img = pygame.transform.scale(self.img, self.size)
         elif controls_state == State.right and self.rect.right < self.screen_rect.right:
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
-            self.img = pygame.transform.scale(self.img, self.scale_tuple)
+            self.img = pygame.transform.scale(self.img, self.size)
         elif controls_state == State.left and self.rect.left > self.screen_rect.left:
             self.rect.x -= self.speed
             self.img = self.sprites["tailRight"]
-            self.img = pygame.transform.scale(self.img, self.scale_tuple)
-
+            self.img = pygame.transform.scale(self.img, self.size)
+        """
 
     def blit_player(self):
         """
