@@ -17,6 +17,9 @@ class BiggerFish:
 
         pg.display.set_caption('Bigger Fish')
         icon = pg.image.load(self.settings.logo_path)
+        img_over = pg.image.load('resources/images/shot.png')
+        self.img_over= pg.transform.scale(img_over,self.settings.screen_size)
+        self.over=False
         pg.display.set_icon(icon)
         self.screen = pg.display.set_mode(self.settings.screen_size)  # screen is a tuple of width and height
 
@@ -141,6 +144,9 @@ class BiggerFish:
 
         self.counter.blit(self.screen)
 
+        if self.over=='madafucka':
+            self.screen.blit(self.img_over,[0,0])
+
         #self.fog_counter -= 1
         #self.screen.blit(self.fog, [self.fog_counter, self.fog_counter])
 
@@ -210,21 +216,32 @@ class BiggerFish:
                 self.start = time.time()
 
             self.loopNumber += 1
-            if self.loopNumber > num_of_frame_to_average:
+            if self.lofopNumber > num_of_frame_to_average:
                 end = time.time()
                 one_loop_time = (end - self.start) / self.loopNumber
                 if printing:
                     print(f'{one_loop_time=: .6f} s {(1 / one_loop_time): .1f} FPS possible')
                 if log:
-                    logging.info(f'{one_loop_time=: .6f} s {(1 / one_loop_time): .1f} FPS possible')
+                    logging.info('{one_loop_time=: .6f} s {(1 / one_loop_time): .1f} FPS possible')
                 self.loopNumber = 0
 
     def collision_general(self):
 
         for enemy in self.enemies:
+            # If hitboxes rects are collided
             if self.player.hitbox.colliderect(enemy.hitbox):
-                # print('BANG')
-                self.enemies.remove(enemy)
-                self.counter.add_points(1)
 
-        pass
+                # If they are kissing in head
+                if enemy.hitbox.bottom < self.player.hitbox.top + 10 :
+
+                    #If player is thicker
+                    if enemy.hitbox.w < self.player.hitbox.w:
+                        self.enemies.remove(enemy)
+                        self.counter.add_points(1)
+
+                    # GAME OVER
+                    else:
+                        self.over='madafucka'
+
+
+
