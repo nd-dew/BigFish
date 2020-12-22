@@ -1,11 +1,11 @@
-import pygame
+import pygame as pg
 
-pygame.init()
-screen = pygame.display.set_mode([600, 600])
+pg.init()
+screen = pg.display.set_mode([600, 600])
 
 running = True
 while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+    for event in pg.event.get():
+        if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             running = False
-pygame.quit()
+pg.quit()

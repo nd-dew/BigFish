@@ -1,5 +1,5 @@
 import random
-import pygame
+import pygame as pg
 from src import settings
 from src import player
 from src import enemy
@@ -12,28 +12,28 @@ logging.basicConfig(filename='resources/logs/timeOfOneLoop.log', level=logging.I
 
 class BiggerFish:
     def __init__(self):
-        pygame.init()
+        pg.init()
         self.settings = settings.Settings()
 
-        pygame.display.set_caption('Bigger Fish')
-        icon = pygame.image.load(self.settings.logo_path)
-        pygame.display.set_icon(icon)
-        self.screen = pygame.display.set_mode(self.settings.screen_size)  # screen is a tuple of width and height
+        pg.display.set_caption('Bigger Fish')
+        icon = pg.image.load(self.settings.logo_path)
+        pg.display.set_icon(icon)
+        self.screen = pg.display.set_mode(self.settings.screen_size)  # screen is a tuple of width and height
 
         # Background
         self.current_bg_animation = 0
         self.bg_surface = self.settings.bg_animation[self.current_bg_animation]
-        #self.bg_surface = pygame.transform.scale(self.bg_surface, self.settings.screen_size)
+        #self.bg_surface = pg.transform.scale(self.bg_surface, self.settings.screen_size)
 
-        #self.fog = pygame.image.load('resources/images/fog2.png')
+        #self.fog = pg.image.load('resources/images/fog2.png')
         #self.fog_counter = 0
 
         # Time variable
-        self.clock = pygame.time.Clock()  # for frames per second/ delay?
+        self.clock = pg.time.Clock()  # for frames per second/ delay?
 
         # Events ID generator, created to keep track of eventID
-        # user event ID has to be between pygame.USEREVENT and pygame.NUMEVENTS
-        self.event_id_generator= (id for id in range(pygame.USEREVENT+1, pygame.NUMEVENTS))
+        # user event ID has to be between pg.USEREVENT and pg.NUMEVENTS
+        self.event_id_generator= (id for id in range(pg.USEREVENT+1, pg.NUMEVENTS))
 
         # Counter initialization
         self.counter = self.Counter(self.screen)
@@ -41,8 +41,8 @@ class BiggerFish:
 
         self.enemies = [] # array of enemies
         self.spawn_rate = 500 # initial spawn rate
-        self.SPAWN_EVENT = pygame.USEREVENT # TODO use generator in here 'next( self.event_id_generator)'
-        pygame.time.set_timer(self.SPAWN_EVENT, self.spawn_rate)
+        self.SPAWN_EVENT = pg.USEREVENT # TODO use generator in here 'next( self.event_id_generator)'
+        pg.time.set_timer(self.SPAWN_EVENT, self.spawn_rate)
 
         self.player = player.Player(self)  # pplayer1layer instance
         self.running = True
@@ -69,7 +69,7 @@ class BiggerFish:
 
             self.screen_update()  # Updating screen TODO name is a little confusing it does more like a reneder/blit
 
-            #self.start_time = pygame.time.get_ticks()
+            #self.start_time = pg.time.get_ticks()
             # self.spawn()
             #print(self.controls) # DEBUG
 
@@ -88,29 +88,29 @@ class BiggerFish:
         self.enemies.append(enemy.Enemy(self))  # adding enemies
 
     def check_events(self):
-        for event in pygame.event.get():
+        for event in pg.event.get():
             
             # QUIT GAME
-            if event.type == pygame.QUIT or event.type == pygame.K_ESCAPE:
+            if event.type == pg.QUIT or event.type == pg.K_ESCAPE:
                 self.running = False
 
             # KEYBOARD INPUT
-            elif event.type == pygame.KEYDOWN:  # Check for events when a keypress is done
-                if event.key == pygame.K_RIGHT:
+            elif event.type == pg.KEYDOWN:  # Check for events when a keypress is done
+                if event.key == pg.K_RIGHT:
                     # self.player.direction = "right"
                     # self.controls.right_down()
                     self.player.right = True
-                elif event.key == pygame.K_LEFT:
+                elif event.key == pg.K_LEFT:
                     # self.player.direction = "left"
                     # self.controls.left_down()
                     self.player.left = True
 
-            elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
+            elif event.type == pg.KEYUP:
+                if event.key == pg.K_RIGHT:
                     # self.player.direction = "stop"
                     # self.controls.right_up()
                     self.player.right = False
-                elif event.key == pygame.K_LEFT:
+                elif event.key == pg.K_LEFT:
                     # self.player.direction = "stop"
                     # self.controls.left_up()
                     self.player.left = False
@@ -133,24 +133,24 @@ class BiggerFish:
 
         # Draw enemies in the screen (iterate over the list of enemies)
         for enem in self.enemies: # Can be reduced with sprite.group
-            enem.blit_enemy(bbox=False, hitbox=False)
+            enem.blit_enemy(bbox=True, hitbox=False)
 
         # Draw player on the screen
-        self.player.blit_player(bbox=False, hitbox=False)  # drawing our fish on top of our background
+        self.player.blit_player(bbox=False, hitbox=True)  # drawing our fish on top of our background
 
         self.counter.blit(self.screen)
 
         #self.fog_counter -= 1
         #self.screen.blit(self.fog, [self.fog_counter, self.fog_counter])
 
-        pygame.display.flip()  # TODO change to update
+        pg.display.flip()  # TODO change to update
 
     class Counter():
         def __init__(self, parentScreen):
             self.screen = parentScreen
             self.points=0
-            self.font = pygame.font.SysFont('Comic Sans MS', 30)
-            self.font_color= pygame.Color('white')
+            self.font = pg.font.SysFont('Comic Sans MS', 30)
+            self.font_color= pg.Color('white')
             self.img= self.font.render(str(self.points), False,  self.font_color, None)
             self.rect = self.img.get_rect()
 
@@ -160,7 +160,7 @@ class BiggerFish:
             """ add test event to increment counter every x miliseconds
             """
             self.event=next(generator)
-            pygame.time.set_timer(self.event, timeBetweenEvents)
+            pg.time.set_timer(self.event, timeBetweenEvents)
 
         def eventAction(self):
             self.points = ( self.points + 13 + 100) % 100

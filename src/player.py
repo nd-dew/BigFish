@@ -1,5 +1,5 @@
 from enum import Enum
-import pygame 
+import pygame as pg
 from src.state import State
 
 class Player():
@@ -18,23 +18,23 @@ class Player():
         Actual size of displayed player image in pixels. [width, height]
     sizes : [[int,int], [int,int], [int,int], ...]
         List of all possible sizes player can take.
-    screen : pygame.surface
+    screen : pg.surface
         local copy of main screen used in main game class (DO we really need it)
-    screen_rect: pygame.Rect
+    screen_rect: pg.Rect
         rect structure derived from main screen, used in boundary case calculations
-    all_sizes_sprites: {int: {str: pygame.Surface, str: pygame.Surface, str: pygame.Surface}... }
+    all_sizes_sprites: {int: {str: pg.Surface, str: pg.Surface, str: pg.Surface}... }
        Dict containing all of possible images of player. Calculated in the beginning of the game.
        Data Structure Explained:
            {level_1 : dict_with_sprites, level_2 : dict_with_sprites, level_3 : dict_with_sprites...}
             it is a dictionary of dictionaries. Keys in outer dictionary are integers (so far). While in the inner dicts
             called in here 'dict_with_sprites' we find rescaled sprites.
             Structure of inner dict called in here dict_with_sprites looks like this:
-            {'steady': pygame.Surface, 'tailRight': pygame.Surface, 'tailLeft': pygame.Surface}
-    sprites : {'steady': pygame.Surface, 'tailRight': pygame.Surface, 'tailLeft': pygame.Surface}
+            {'steady': pg.Surface, 'tailRight': pg.Surface, 'tailLeft': pg.Surface}
+    sprites : {'steady': pg.Surface, 'tailRight': pg.Surface, 'tailLeft': pg.Surface}
         current set of sprites used to display animations.
-    img : pygame.Surface
+    img : pg.Surface
         current image to blit on screen
-    rect : pygame.Rect
+    rect : pg.Rect
         rect corresponding to self.img, used to describe position in bliting
     direction : str
         deprecated, Used in past to represent current state of player
@@ -57,14 +57,14 @@ class Player():
 
         # Getting player sprites
         self.sprites={}
-        self.sprites['steady'] = pygame.image.load("resources/images/sprite_sheets/player0.png").convert()
-        self.sprites['tailRight'] = pygame.image.load("resources/images/sprite_sheets/player2.png").convert()
-        self.sprites['tailLeft'] = pygame.image.load("resources/images/sprite_sheets/player1.png").convert()
+        self.sprites['steady'] = pg.image.load("resources/images/sprite_sheets/player0.png").convert()
+        self.sprites['tailRight'] = pg.image.load("resources/images/sprite_sheets/player2.png").convert()
+        self.sprites['tailLeft'] = pg.image.load("resources/images/sprite_sheets/player1.png").convert()
 
         # Initial image rescaling
         self.img = self.sprites['steady']
         self.size = [self.sizes[self.size_level][0], self.sizes[self.size_level][1]]
-        self.img = pygame.transform.scale(self.img, self.size)
+        self.img = pg.transform.scale(self.img, self.size)
         self.rect = self.img.get_rect()
 
         # Setting initial position
@@ -86,15 +86,15 @@ class Player():
         if self.right and not self.left and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
-            self.img = pygame.transform.scale(self.img, self.size)
+            self.img = pg.transform.scale(self.img, self.size)
         elif self.left and not self.right and self.rect.left > self.screen_rect.left:
             self.rect.x -= self.speed
             self.img = self.sprites["tailRight"]
-            self.img = pygame.transform.scale(self.img, self.size)
+            self.img = pg.transform.scale(self.img, self.size)
         else: # to rethink
             # self.rect.x += 0
             self.img = self.sprites["steady"]
-            self.img = pygame.transform.scale(self.img, self.size)
+            self.img = pg.transform.scale(self.img, self.size)
 
         # Dynamic Hitbox, hardcoded again
         self.hitbox = (self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
@@ -111,15 +111,15 @@ class Player():
         """
         if controls_state == State.stop:
             self.img = self.sprites["steady"]
-            self.img = pygame.transform.scale(self.img, self.size)
+            self.img = pg.transform.scale(self.img, self.size)
         elif controls_state == State.right and self.rect.right < self.screen_rect.right:
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
-            self.img = pygame.transform.scale(self.img, self.size)
+            self.img = pg.transform.scale(self.img, self.size)
         elif controls_state == State.left and self.rect.left > self.screen_rect.left:
             self.rect.x -= self.speed
             self.img = self.sprites["tailRight"]
-            self.img = pygame.transform.scale(self.img, self.size)
+            self.img = pg.transform.scale(self.img, self.size)
         """
 
     def blit_player(self, bbox=False, hitbox=False):
@@ -127,9 +127,9 @@ class Player():
         Render player img on screen surface
         """
         if bbox :
-            pygame.draw.rect(self.screen, pygame.Color('green'), self.rect, width=1)
+            pg.draw.rect(self.screen, pg.Color('green'), self.rect, width=1)
         if hitbox:
-            pygame.draw.rect(self.screen, pygame.Color('red'), self.hitbox, width=1)
+            pg.draw.rect(self.screen, pg.Color('red'), self.hitbox, width=1)
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
 
     def change_size(self, level):
@@ -159,7 +159,7 @@ class Player():
 
         Returns
         -------
-        all_sizes_sprites : {int: {str: pygame.Surface, str: pygame.Surface, str: pygame.Surface}... }
+        all_sizes_sprites : {int: {str: pg.Surface, str: pg.Surface, str: pg.Surface}... }
             Dict containing all of possible images sets of player.
 
         --- Andy's first implementation. Not used.
@@ -167,13 +167,13 @@ class Player():
 
         all_sizes_sprites={}
         # TODO those paths should be in one place
-        steady= pygame.image.load("resources/images/sprite_sheets/player0.png").convert()
-        tailRight= pygame.image.load("resources/images/sprite_sheets/player2.png").convert()
-        tailLeft= pygame.image.load("resources/images/sprite_sheets/player1.png").convert()
+        steady= pg.image.load("resources/images/sprite_sheets/player0.png").convert()
+        tailRight= pg.image.load("resources/images/sprite_sheets/player2.png").convert()
+        tailLeft= pg.image.load("resources/images/sprite_sheets/player1.png").convert()
         for i, size in enumerate(sizes):
             all_sizes_sprites[i]={
-                'steady':       pygame.transform.scale(steady,  size),
-                'tailRight':    pygame.transform.scale(tailRight,  size),
-                'tailLeft':     pygame.transform.scale(tailLeft,  size)
+                'steady':       pg.transform.scale(steady,  size),
+                'tailRight':    pg.transform.scale(tailRight,  size),
+                'tailLeft':     pg.transform.scale(tailLeft,  size)
             }
         return all_sizes_sprites
