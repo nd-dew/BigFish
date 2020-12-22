@@ -1,5 +1,5 @@
 from enum import Enum
-import pygame
+import pygame 
 from src.state import State
 
 class Player():
@@ -117,10 +117,12 @@ class Player():
             self.img = pygame.transform.scale(self.img, self.size)
         """
 
-    def blit_player(self):
+    def blit_player(self, bbox=True):
         """
         Render player img on screen surface
         """
+        if bbox :
+            pygame.draw.rect(self.img, pygame.Color('red'), [0,0,self.rect.width,self.rect.height], width=1)
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
 
     def change_size(self, level):
