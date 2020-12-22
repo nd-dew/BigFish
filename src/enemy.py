@@ -28,10 +28,12 @@ class Enemy():
         self.rect.midbottom = (self.x_pos, self.y_pos)
 
         # Dynamic Hitbox, hardcoded
-        self.hitbox = (self.rect.x + self.rect.w // 3.3,
+        self.hitbox = pg.Rect(
+                       self.rect.x + self.rect.w // 3.3,
                        self.rect.y + self.rect.h // 8,
                        self.rect.w - self.rect.w // 1.7,
-                       self.rect.h - self.rect.h // 5)
+                       self.rect.h - self.rect.h // 5
+        )
 
     def update(self):
         self.y_pos += self.speed
@@ -39,11 +41,12 @@ class Enemy():
         self.rect.midbottom = (self.x_pos, self.y_pos)
 
         # Dynamic Hitbox, hardcoded
-        self.hitbox = (self.rect.x + self.rect.w // 3.3,
+        self.hitbox = pg.Rect(
+                       self.rect.x + self.rect.w // 3.3,
                        self.rect.y + self.rect.h // 8,
                        self.rect.w - self.rect.w // 1.7,
-                       self.rect.h - self.rect.h // 5)
-
+                       self.rect.h - self.rect.h // 5
+        )
     def blit_enemy(self, bbox=False, hitbox=False):
         if bbox :
             pg.draw.rect(self.screen, pg.Color('green'), self.rect, width=1)

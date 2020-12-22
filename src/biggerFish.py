@@ -66,6 +66,7 @@ class BiggerFish:
                     self.enemies.remove(enem)
             #print('\n',len(self.enemies), end='  ') # checking the size of the list
 
+            self.collision_general()
 
             self.screen_update()  # Updating screen TODO name is a little confusing it does more like a reneder/blit
 
@@ -117,7 +118,7 @@ class BiggerFish:
 
             elif event.type == self.counter.event:
                 # increment counter up to 200
-                self.counter.update( (self.counter.points + 1)%200 )
+                self.counter.update()
 
             if event.type == self.SPAWN_EVENT: # TODO change to elif
                 self.spawn_enemies()
@@ -133,10 +134,10 @@ class BiggerFish:
 
         # Draw enemies in the screen (iterate over the list of enemies)
         for enem in self.enemies: # Can be reduced with sprite.group
-            enem.blit_enemy(bbox=False, hitbox=False)
+            enem.blit_enemy(bbox=True, hitbox=True)
 
         # Draw player on the screen
-        self.player.blit_player(bbox=False, hitbox=False)  # drawing our fish on top of our background
+        self.player.blit_player(bbox=True, hitbox=True)  # drawing our fish on top of our background
 
         self.counter.blit(self.screen)
 
@@ -165,8 +166,9 @@ class BiggerFish:
         def eventAction(self):
             self.points = ( self.points + 13 + 100) % 100
 
-        def update(self, points):
-            self.points = points
+        def update(self, points=None):
+            if points!=None:
+                self.points = points
             self.img= self.font.render(str(self.points), False,  self.font_color, None)
             self.rect = self.img.get_rect()
             self._move_to_bottomright_of(self.screen)
@@ -180,9 +182,12 @@ class BiggerFish:
         def blit(self, screen):
             screen.blit(self.img, self.rect)
 
+        def add_points(self, points):
+            self.points +=points
 
 
-    def _check_performance(self, num_of_frame_to_average=3000, printing=True, log=True):
+
+    def _check_performance(self, num_of_frame_to_average=100, printing=True, log=True):
         """
         Run in main loop without FPS limitations.
 
@@ -213,3 +218,13 @@ class BiggerFish:
                 if log:
                     logging.info(f'{one_loop_time=: .6f} s {(1 / one_loop_time): .1f} FPS possible')
                 self.loopNumber = 0
+
+    def collision_general(self):
+
+        for enemy in self.enemies:
+            if self.player.hitbox.colliderect(enemy.hitbox):
+                # print('BANG')
+                self.enemies.remove(enemy)
+                self.counter.add_points(1)
+
+        pass

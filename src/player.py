@@ -77,7 +77,7 @@ class Player():
         self.left = False
 
         # Dynamic Hitbox, hardcoded
-        self.hitbox= (self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
+        self.hitbox= pg.Rect(self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
 
     def update(self):
         """ deprecated
@@ -97,7 +97,7 @@ class Player():
             self.img = pg.transform.scale(self.img, self.size)
 
         # Dynamic Hitbox, hardcoded again
-        self.hitbox = (self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
+        self.hitbox = pg.Rect(self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
 
     # def update(self, controls_state):
         """ update current player actions attr/flags according to given state
