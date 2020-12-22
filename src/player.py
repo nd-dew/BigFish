@@ -53,13 +53,13 @@ class Player():
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
         self.all_sizes_sprites = self._calculate_surfaces_from_sizes(self.sizes) #unused
 
-        self.change_size(0)  # Used for testing, not needed in here
+        self.change_size(1)  # Used for testing, not needed in here
 
         # Getting player sprites
         self.sprites={}
-        self.sprites['steady'] = pygame.image.load("resources/images/sprite_sheets/tile037.png").convert()
-        self.sprites['tailRight'] = pygame.image.load("resources/images/sprite_sheets/tile036.png").convert()
-        self.sprites['tailLeft'] = pygame.image.load("resources/images/sprite_sheets/tile038.png").convert()
+        self.sprites['steady'] = pygame.image.load("resources/images/sprite_sheets/player0.png").convert()
+        self.sprites['tailRight'] = pygame.image.load("resources/images/sprite_sheets/player2.png").convert()
+        self.sprites['tailLeft'] = pygame.image.load("resources/images/sprite_sheets/player1.png").convert()
 
         # Initial image rescaling
         self.img = self.sprites['steady']
@@ -158,9 +158,9 @@ class Player():
 
         all_sizes_sprites={}
         # TODO those paths should be in one place
-        steady= pygame.image.load("resources/images/sprite_sheets/tile037.png").convert()
-        tailRight= pygame.image.load("resources/images/sprite_sheets/tile036.png").convert()
-        tailLeft= pygame.image.load("resources/images/sprite_sheets/tile038.png").convert()
+        steady= pygame.image.load("resources/images/sprite_sheets/player0.png").convert()
+        tailRight= pygame.image.load("resources/images/sprite_sheets/player2.png").convert()
+        tailLeft= pygame.image.load("resources/images/sprite_sheets/player1.png").convert()
         for i, size in enumerate(sizes):
             all_sizes_sprites[i]={
                 'steady':       pygame.transform.scale(steady,  size),

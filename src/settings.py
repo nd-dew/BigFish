@@ -39,14 +39,16 @@ class Settings:
         self.FPS = 60
 
         # PLAYER SPRITE PICTURES
-        self.player_steady = "resources/images/sprite_sheets/tile037.png"
-        self.player_tailRight = "resources/images/sprite_sheets/tile036.png"
-        self.player_tailLeft = "resources/images/sprite_sheets/tile038.png"
+        self.player_steady = "resources/images/sprite_sheets/player0.png"
+        self.player_tailRight = "resources/images/sprite_sheets/player1.png"
+        self.player_tailLeft = "resources/images/sprite_sheets/player2.png"
 
         # ENEMIES
         """(speed, width, height, path_R, path_S, path_L)"""
         red_fish = EnemyType(1, width=48, height=48, path_R="resources/images/enemy2.png", path_S="resources/images/enemy1.png", path_L="resources/images/enemy3.png")
-        green_fish = EnemyType(1, width=60, height=60, path_R="resources/images/enemy5.png", path_S="resources/images/enemy4.png", path_L="resources/images/enemy6.png")
-        brown_fish = EnemyType(3, width=100, height=100, path_R="resources/images/enemy8.png", path_S="resources/images/enemy7.png", path_L="resources/images/enemy9.png")
-
-        self.enemies = [red_fish, green_fish, brown_fish]
+        green_fish = EnemyType(2, width=60, height=60, path_R="resources/images/enemy5.png", path_S="resources/images/enemy4.png", path_L="resources/images/enemy6.png")
+        brown_fish = EnemyType(2, width=100, height=100, path_R="resources/images/enemy8.png", path_S="resources/images/enemy7.png", path_L="resources/images/enemy9.png")
+        white_fish = EnemyType(1, width=80, height=80, path_R="resources/images/enemy10.png", path_S="resources/images/enemy11.png", path_L="resources/images/enemy12.png")
+        blue_fish = EnemyType(1, width=100, height=100, path_R="resources/images/enemy13.png", path_S="resources/images/enemy14.png", path_L="resources/images/enemy15.png")
+        purple_fish = EnemyType(2, width=100, height=100, path_R="resources/images/enemy16.png", path_S="resources/images/enemy17.png", path_L="resources/images/enemy18.png")
+        self.enemies = [red_fish, green_fish, brown_fish, white_fish, blue_fish, purple_fish]

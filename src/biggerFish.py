@@ -22,6 +22,9 @@ class BiggerFish:
         self.bg_surface = self.settings.bg_animation[self.current_bg_animation]
         #self.bg_surface = pygame.transform.scale(self.bg_surface, self.settings.screen_size)
 
+        #self.fog = pygame.image.load('resources/images/fog2.png')
+        #self.fog_counter = 0
+
         # Time variable
         self.clock = pygame.time.Clock()  # for frames per second/ delay?
 
@@ -34,11 +37,11 @@ class BiggerFish:
         self.counter.addEvent(self.event_id_generator, 100)
 
         self.enemies = [] # array of enemies
-        self.spawn_rate = 1000 # initial spawn rate
+        self.spawn_rate = 500 # initial spawn rate
         self.SPAWN_EVENT = pygame.USEREVENT # TODO use generator in here 'next( self.event_id_generator)'
         pygame.time.set_timer(self.SPAWN_EVENT, self.spawn_rate)
 
-        self.player = player.Player(self)  # player instance
+        self.player = player.Player(self)  # pplayer1layer instance
         self.running = True
 
         self.controls= Controls()
@@ -46,6 +49,7 @@ class BiggerFish:
     def run_game(self):
         while self.running:  # Start of the game's main loop
             self.check_events()  # Event loop
+
             self.player.update()
             # self.player.update(self.controls.what_fish_should_do())  # Checking the update method in PLAYER each loop.
             for enem in self.enemies: # Can be reduced with sprite.group
@@ -54,6 +58,8 @@ class BiggerFish:
                 if enem.rect.midbottom[1] >= self.settings.screen_height + 50:
                     self.enemies.remove(enem)
             print(len(self.enemies)) # checking the size of the list
+
+
             self.screen_update()  # Updating screen
             self.clock.tick(self.settings.FPS)
             #self.start_time = pygame.time.get_ticks()
@@ -105,6 +111,7 @@ class BiggerFish:
         self.screen.fill(self.settings.bg_color)  # Redrawing the background each pass
 
 
+
         self.current_bg_animation += 0.5
         if self.current_bg_animation >= len(self.settings.bg_animation):
             self.current_bg_animation = 0
@@ -120,6 +127,9 @@ class BiggerFish:
 
         self.counter.blit(self.screen)
 
+        #self.fog_counter -= 1
+        #self.screen.blit(self.fog, [self.fog_counter, self.fog_counter])
+
         pygame.display.flip()  # TODO change to update
 
     class Counter():
@@ -127,7 +137,7 @@ class BiggerFish:
             self.screen=parentScreen
             self.points=0
             self.font = pygame.font.SysFont('Comic Sans MS', 30)
-            self.font_color= pygame.Color('black')
+            self.font_color= pygame.Color('white')
             self.img= self.font.render(str(self.points), False,  self.font_color, None)
             self.rect = self.img.get_rect()
 
