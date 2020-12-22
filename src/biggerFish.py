@@ -44,11 +44,8 @@ class BiggerFish:
         self.controls= Controls()
 
 
-    def run_game(self):
-        loopNumber = 0
-        elapsed=0
+    def run_game(self, check_performance=False):
         while self.running:  # Start of the game's main loop
-            start = time.time()
 
             self.check_events()  # Event loop
             self.player.update()
@@ -65,19 +62,12 @@ class BiggerFish:
             # self.spawn()
             #print(self.controls) # DEBUG
 
-            # PERFORMANCE LOG START------------------------------------------------
-            elapsed += (time.time() - start)
-            loopNumber += 1
 
-            if loopNumber > 1000:
-                one_loop_time= elapsed / loopNumber
-                logging.info(f'{one_loop_time=} s {1 / one_loop_time} FPS possible')
-                print(f'{one_loop_time=} s {1 / one_loop_time} FPS possible')
-                loopNumber = 0
-                elapsed=0
-            # PERFORMANCE LOG END---------------------------------------------------
-
-            self.clock.tick(self.settings.FPS)
+            # PERFORMANCE, Don't limit frames if checking performance
+            if check_performance:
+                self._check_performance()
+            else:
+                self.clock.tick(self.settings.FPS)
 
 
     # def spawn(self):
@@ -171,3 +161,37 @@ class BiggerFish:
 
         def blit(self, screen):
             screen.blit(self.img, self.rect)
+
+
+
+    def _check_performance(self, num_of_frame_to_average=3000, printing=True, log=True):
+        """
+        Run in main loop without FPS limitations.
+
+        Parameters
+        ----------
+        num_of_frame_to_average : int, optional, default 3000
+            The more the more accurate calculations are, but you will wait longer for the results.
+        printing : bool, optional, default True
+            do you want to see results in console
+        log : bool, optional, default True
+            do you want to output results to log file
+        """
+
+        if not hasattr(self,  'loopNumber'):
+            # setattr(self._check_performance, 'loopNumber', 0)
+            self.loopNumber = 0
+            self.start=0
+        else:
+            if self.loopNumber == 0:
+                self.start = time.time()
+
+            self.loopNumber += 1
+            if self.loopNumber > num_of_frame_to_average:
+                end = time.time()
+                one_loop_time = (end - self.start) / self.loopNumber
+                if printing:
+                    print(f'{one_loop_time=: .6f} s {(1 / one_loop_time): .1f} FPS possible')
+                if log:
+                    logging.info(f'{one_loop_time=: .6f} s {(1 / one_loop_time): .1f} FPS possible')
+                self.loopNumber = 0
