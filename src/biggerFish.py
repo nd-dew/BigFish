@@ -49,6 +49,9 @@ class BiggerFish:
 
         self.controls= Controls()
 
+        # Printing things nicely in console
+        self.print_buffer=''
+
 
     def run_game(self, check_performance=False):
         while self.running:  # Start of the game's main loop
@@ -61,7 +64,7 @@ class BiggerFish:
             for enem in self.enemies.copy(): # deleting enemies
                 if enem.rect.midbottom[1] >= self.settings.screen_height + 50:
                     self.enemies.remove(enem)
-            print(len(self.enemies)) # checking the size of the list
+            #print('\n',len(self.enemies), end='  ') # checking the size of the list
 
 
             self.screen_update()  # Updating screen
