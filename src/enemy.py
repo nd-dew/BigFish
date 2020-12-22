@@ -27,14 +27,28 @@ class Enemy():
         self.y_pos = 0
         self.rect.midbottom = (self.x_pos, self.y_pos)
 
+        # Dynamic Hitbox, hardcoded
+        self.hitbox = (self.rect.x + self.rect.w // 3.3,
+                       self.rect.y + self.rect.h // 8,
+                       self.rect.w - self.rect.w // 1.7,
+                       self.rect.h - self.rect.h // 5)
+
     def update(self):
         self.y_pos += self.speed
         self.sprite_image()
         self.rect.midbottom = (self.x_pos, self.y_pos)
 
-    def blit_enemy(self, bbox=False):
+        # Dynamic Hitbox, hardcoded
+        self.hitbox = (self.rect.x + self.rect.w // 3.3,
+                       self.rect.y + self.rect.h // 8,
+                       self.rect.w - self.rect.w // 1.7,
+                       self.rect.h - self.rect.h // 5)
+
+    def blit_enemy(self, bbox=False, hitbox=False):
         if bbox :
-            pygame.draw.rect(self.img, pygame.Color('green'), [0,0,self.rect.width,self.rect.height], width=1)
+            pygame.draw.rect(self.screen, pygame.Color('green'), self.rect, width=1)
+        if hitbox:
+            pygame.draw.rect(self.screen, pygame.Color('red'), self.hitbox, width=1)
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
 
     def sprite_image(self):
