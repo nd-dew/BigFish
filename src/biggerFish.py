@@ -216,7 +216,7 @@ class BiggerFish:
                 self.start = time.time()
 
             self.loopNumber += 1
-            if self.lofopNumber > num_of_frame_to_average:
+            if self.loopNumber > num_of_frame_to_average:
                 end = time.time()
                 one_loop_time = (end - self.start) / self.loopNumber
                 if printing:
