@@ -26,7 +26,7 @@ class Settings:
         self.screen_height = 500
         self.screen_size = (self.screen_width, self.screen_height)
 
-        self.bg_color = (230, 230, 230)
+        self.bg_color = pygame.Color('gray')
 
         # BACKGROUND SPRITE PICTURES
         self.bg_animation = []
