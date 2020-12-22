@@ -1,4 +1,4 @@
-import pygame
+import pygame as pg
 from random import randrange
 
 class Enemy():
@@ -14,13 +14,13 @@ class Enemy():
 
         # random_enemy = randrange(0,3)
         self.sprites = []
-        self.sprites.append(pygame.image.load(game.settings.enemies[rand_index].img_path_R).convert())
-        self.sprites.append(pygame.image.load(game.settings.enemies[rand_index].img_path_S).convert())
-        self.sprites.append(pygame.image.load(game.settings.enemies[rand_index].img_path_L).convert())
+        self.sprites.append(pg.image.load(game.settings.enemies[rand_index].img_path_R).convert())
+        self.sprites.append(pg.image.load(game.settings.enemies[rand_index].img_path_S).convert())
+        self.sprites.append(pg.image.load(game.settings.enemies[rand_index].img_path_L).convert())
 
         self.current_sp = 0
         self.img = self.sprites[self.current_sp]
-        self.img = pygame.transform.scale(self.img,  self.size) # adjusting initial size
+        self.img = pg.transform.scale(self.img,  self.size) # adjusting initial size
         self.rect = self.img.get_rect() # x,y, heights, width
         self.screen_margin = self.size[0] // 2 # first element is width
         self.x_pos = randrange(0+self.screen_margin, game.settings.screen_width-self.screen_margin)
@@ -40,4 +40,4 @@ class Enemy():
         if self.current_sp >= len(self.sprites):
             self.current_sp = 0
         self.img = self.sprites[int(self.current_sp)]
-        self.img = pygame.transform.scale(self.img,  self.size) # adjusting size
+        self.img = pg.transform.scale(self.img,  self.size) # adjusting size

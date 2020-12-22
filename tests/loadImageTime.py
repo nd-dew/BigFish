@@ -1,17 +1,17 @@
 """Run this file twice using one of commented surface options"""
 
 import time
-import pygame
+import pygame as pg
 
-pygame.init()
+pg.init()
 
-screen = pygame.display.set_mode([800, 800])  # screen is a tuple of width and height
+screen = pg.display.set_mode([800, 800])  # screen is a tuple of width and height
 
 # First option without convert
-# surface = pygame.image.load('../resources/images/someFish540x540.png')
+# surface = pg.image.load('../resources/images/someFish540x540.png')
 
 # Second option with convert
-surface = pygame.image.load('../resources/images/someFish540x540.png').convert()
+surface = pg.image.load('../resources/images/someFish540x540.png').convert()
 
 running = True
 
@@ -20,11 +20,11 @@ start = time.time()
 i=0
 while i < 10**3:
     i = i+1;
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT or event.type == pygame.K_ESCAPE:
+    for event in pg.event.get():
+        if event.type == pg.QUIT or event.type == pg.K_ESCAPE:
             running = False
     screen.blit(surface, [0, 0])
-    pygame.display.update()
+    pg.display.update()
 
 end = time.time()
 print(start)
