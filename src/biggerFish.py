@@ -133,7 +133,7 @@ class BiggerFish:
 
         # Draw enemies in the screen (iterate over the list of enemies)
         for enem in self.enemies: # Can be reduced with sprite.group
-            enem.blit_enemy()
+            enem.blit_enemy(bbox=True)
 
         # Draw player on the screen
         self.player.blit_player(bbox=True)  # drawing our fish on top of our background

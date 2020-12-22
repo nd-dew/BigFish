@@ -34,7 +34,7 @@ class Enemy():
 
     def blit_enemy(self, bbox=False):
         if bbox :
-            pygame.draw.rect(self.img, pygame.Color('red'), [0,0,self.rect.width,self.rect.height], width=1)
+            pygame.draw.rect(self.img, pygame.Color('green'), [0,0,self.rect.width,self.rect.height], width=1)
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
 
     def sprite_image(self):

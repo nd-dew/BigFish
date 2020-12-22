@@ -76,6 +76,9 @@ class Player():
         self.right = False
         self.left = False
 
+        # Dynamic Hitbox, hardcoded
+        self.hitbox= (self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
+
     def update(self):
         """ deprecated
         """
@@ -93,6 +96,8 @@ class Player():
             self.img = self.sprites["steady"]
             self.img = pygame.transform.scale(self.img, self.size)
 
+        # Dynamic Hitbox, hardcoded again
+        self.hitbox = (self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
 
     # def update(self, controls_state):
         """ update current player actions attr/flags according to given state
@@ -117,12 +122,14 @@ class Player():
             self.img = pygame.transform.scale(self.img, self.size)
         """
 
-    def blit_player(self, bbox=False):
+    def blit_player(self, bbox=False, hitbox=True):
         """
         Render player img on screen surface
         """
         if bbox :
-            pygame.draw.rect(self.img, pygame.Color('red'), [0,0,self.rect.width,self.rect.height], width=1)
+            pygame.draw.rect(self.screen, pygame.Color('green'), self.rect, width=1)
+        if hitbox:
+            pygame.draw.rect(self.screen, pygame.Color('red'), self.hitbox, width=1)
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
 
     def change_size(self, level):
