@@ -32,7 +32,9 @@ class Enemy():
         self.sprite_image()
         self.rect.midbottom = (self.x_pos, self.y_pos)
 
-    def blit_enemy(self):
+    def blit_enemy(self, bbox=False):
+        if bbox :
+            pygame.draw.rect(self.img, pygame.Color('red'), [0,0,self.rect.width,self.rect.height], width=1)
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
 
     def sprite_image(self):

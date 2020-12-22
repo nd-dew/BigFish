@@ -117,7 +117,7 @@ class Player():
             self.img = pygame.transform.scale(self.img, self.size)
         """
 
-    def blit_player(self, bbox=True):
+    def blit_player(self, bbox=False):
         """
         Render player img on screen surface
         """

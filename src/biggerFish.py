@@ -67,7 +67,7 @@ class BiggerFish:
             #print('\n',len(self.enemies), end='  ') # checking the size of the list
 
 
-            self.screen_update()  # Updating screen
+            self.screen_update()  # Updating screen TODO name is a little confusing it does more like a reneder/blit
 
             #self.start_time = pygame.time.get_ticks()
             # self.spawn()
@@ -125,8 +125,6 @@ class BiggerFish:
     def screen_update(self):
         self.screen.fill(self.settings.bg_color)  # Redrawing the background each pass
 
-
-
         self.current_bg_animation += 0.5
         if self.current_bg_animation >= len(self.settings.bg_animation):
             self.current_bg_animation = 0
@@ -138,7 +136,7 @@ class BiggerFish:
             enem.blit_enemy()
 
         # Draw player on the screen
-        self.player.blit_player()  # drawing our fish on top of our background
+        self.player.blit_player(bbox=True)  # drawing our fish on top of our background
 
         self.counter.blit(self.screen)
 
