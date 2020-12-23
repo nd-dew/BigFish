@@ -97,7 +97,7 @@ class Player():
         Render player img on screen surface
         """
         if bbox :
-            pg.draw.rect(self.screen, pg.Color('green'), self.rect, width=1)
+            pg.draw.rect(self.screen, pg.Color('green'), self.rect, width=1) # box of the image
         if hitbox:
             pg.draw.rect(self.screen, pg.Color('red'), self.hitbox, width=1)
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top

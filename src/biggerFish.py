@@ -208,7 +208,7 @@ class BiggerFish:
 
         for enemy in self.enemies:
             # If hitboxes rects are collided
-            if self.player.hitbox.colliderect(enemy.hitbox):
+            if self.player.hitbox.colliderect(enemy.hitbox): # if two rectangles overlap
 
                 # If they are kissing in head
                 if enemy.hitbox.bottom < self.player.hitbox.top + 10:
