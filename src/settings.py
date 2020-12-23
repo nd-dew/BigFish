@@ -1,4 +1,4 @@
-import pygame
+import pygame as pg
 from src.enemyType import EnemyType
 
 class Settings:
@@ -26,13 +26,13 @@ class Settings:
         self.screen_height = 500
         self.screen_size = (self.screen_width, self.screen_height)
 
-        self.bg_color = pygame.Color('gray')
+        self.bg_color = pg.Color('gray')
 
         # BACKGROUND SPRITE PICTURES
         self.bg_animation = []
         for i in range(0, 49):
             string = 'resources/images/background/bg' + str(i) + '.png'
-            self.bg_animation.append(pygame.image.load(string))
+            self.bg_animation.append(pg.image.load(string))
 
 
         self.logo_path = "resources/images/logo_shark.png"
