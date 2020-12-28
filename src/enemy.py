@@ -46,7 +46,7 @@ class Enemy():
                        self.rect.h - self.rect.h // 5
         )
     def blit_enemy(self, bbox=False, hitbox=False):
-        if bbox :
+        if bbox:
             pg.draw.rect(self.screen, pg.Color('green'), self.rect, width=1)
         if hitbox:
             pg.draw.rect(self.screen, pg.Color('red'), self.hitbox, width=1)
