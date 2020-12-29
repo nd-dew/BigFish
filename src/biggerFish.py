@@ -77,7 +77,7 @@ class BiggerFish:
                 self.score = 0
                 self.player = player.Player(self)  # player1 instance
                 self.enemies = []  # array of enemies
-                self.spawn_rate = 500  # initial spawn rate
+                self.spawn_rate = 300  # initial spawn rate
                 pg.time.set_timer(self.SPAWN_EVENT, self.spawn_rate)
                 self.sound_start.play()
 
@@ -86,7 +86,7 @@ class BiggerFish:
             for enem in self.enemies:  # Can be reduced with sprite.group
                 enem.update()
             for enem in self.enemies.copy():  # deleting enemies
-                if enem.rect.midbottom[1] >= self.settings.screen_height + 50:
+                if enem.rect.midbottom[1] >= self.settings.screen_height + 150:
                     self.enemies.remove(enem)
             # print('\n',len(self.enemies), end='  ') # checking the size of the list
 
@@ -117,7 +117,7 @@ class BiggerFish:
             self.check_events()
 
     def display_text(self, screen, text, font_size, x_pos, y_pos):
-        font = pg.font.Font(pg.font.match_font('arial'), font_size)
+        font = pg.font.Font(pg.font.match_font('impact'), font_size)
         text_img = font.render(text, True, (0, 0, 0))
         text_rect = text_img.get_rect()
         text_rect.midtop = (x_pos, y_pos)

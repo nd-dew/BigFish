@@ -57,10 +57,21 @@ class Settings:
 
         # ENEMIES
         """(speed, width, height, path_R, path_S, path_L)"""
-        red_fish = EnemyType(1, width=48, height=48, path_R="resources/images/enemies/enemy2.png", path_S="resources/images/enemies/enemy1.png", path_L="resources/images/enemies/enemy3.png")
-        green_fish = EnemyType(2, width=60, height=60, path_R="resources/images/enemies/enemy5.png", path_S="resources/images/enemies/enemy4.png", path_L="resources/images/enemies/enemy6.png")
-        brown_fish = EnemyType(2, width=100, height=100, path_R="resources/images/enemies/enemy8.png", path_S="resources/images/enemies/enemy7.png", path_L="resources/images/enemies/enemy9.png")
-        white_fish = EnemyType(1, width=80, height=80, path_R="resources/images/enemies/enemy10.png", path_S="resources/images/enemies/enemy11.png", path_L="resources/images/enemies/enemy12.png")
-        blue_fish = EnemyType(1, width=100, height=100, path_R="resources/images/enemies/enemy13.png", path_S="resources/images/enemies/enemy14.png", path_L="resources/images/enemies/enemy15.png")
-        purple_fish = EnemyType(2, width=100, height=100, path_R="resources/images/enemies/enemy16.png", path_S="resources/images/enemies/enemy17.png", path_L="resources/images/enemies/enemy18.png")
-        self.enemies = [red_fish, green_fish, brown_fish, white_fish, blue_fish, purple_fish]
+        red_fish = EnemyType(1, width=48, height=48, path_R="resources/images/enemies/red1.png", path_S="resources/images/enemies/red2.png", path_L="resources/images/enemies/red3.png")
+        green_fish = EnemyType(2, width=60, height=60, path_R="resources/images/enemies/green1.png", path_S="resources/images/enemies/green2.png", path_L="resources/images/enemies/green3.png")
+        brown_fish = EnemyType(2, width=80, height=80, path_R="resources/images/enemies/brown1.png", path_S="resources/images/enemies/brown2.png", path_L="resources/images/enemies/brown3.png")
+        white_fish = EnemyType(1, width=50, height=50, path_R="resources/images/enemies/white1.png", path_S="resources/images/enemies/white2.png", path_L="resources/images/enemies/white3.png")
+        blue_fish = EnemyType(1, width=50, height=50, path_R="resources/images/enemies/blue1.png", path_S="resources/images/enemies/blue2.png", path_L="resources/images/enemies/blue3.png")
+        ray_fish = EnemyType(3, width=100, height=100, path_R="resources/images/enemies/ray1.png", path_S="resources/images/enemies/ray2.png", path_L="resources/images/enemies/ray3.png")
+        x_blue_fish = EnemyType(3, width=60, height=60, path_R="resources/images/enemies/xblue1.png", path_S="resources/images/enemies/xblue2.png", path_L="resources/images/enemies/xblue3.png")
+        x_pink_fish = EnemyType(3, width=60, height=60, path_R="resources/images/enemies/xpink1.png", path_S="resources/images/enemies/xpink2.png", path_L="resources/images/enemies/xpink3.png")
+        blow_fish = EnemyType(1, width=50, height=50, path_R="resources/images/enemies/blow1.png", path_S="resources/images/enemies/blow2.png", path_L="resources/images/enemies/blow3.png")
+        sblow_fish = EnemyType(3, width=60, height=60, path_R="resources/images/enemies/sblow1.png", path_S="resources/images/enemies/sblow2.png", path_L="resources/images/enemies/sblow3.png")
+        gray_fish = EnemyType(3, width=80, height=80, path_R="resources/images/enemies/gray1.png", path_S="resources/images/enemies/gray2.png", path_L="resources/images/enemies/gray3.png")
+        gray_shark = EnemyType(4, width=110, height=150, path_R="resources/images/enemies/sharkgray1.png", path_S="resources/images/enemies/sharkgray2.png", path_L="resources/images/enemies/sharkgray3.png")
+        black_shark = EnemyType(5, width=160, height=200, path_R="resources/images/enemies/sharkblack1.png", path_S="resources/images/enemies/sharkblack2.png", path_L="resources/images/enemies/sharkblack3.png")
+        greenorange_shark = EnemyType(4, width=110, height=150, path_R="resources/images/enemies/sharkgreenor1.png", path_S="resources/images/enemies/sharkgreenor2.png", path_L="resources/images/enemies/sharkgreenor3.png")
+        pink_dolphin = EnemyType(5, width=110, height=150, path_R="resources/images/enemies/dolphinpink1.png", path_S="resources/images/enemies/dolphinpink2.png", path_L="resources/images/enemies/dolphinpink3.png")
+        blue_dolphin = EnemyType(4, width=110, height=150, path_R="resources/images/enemies/dolphinblue1.png", path_S="resources/images/enemies/dolphinblue2.png", path_L="resources/images/enemies/dolphinblue3.png")
+
+        self.enemies = [red_fish, green_fish, brown_fish, white_fish, blue_fish, ray_fish, x_blue_fish, x_pink_fish, blow_fish, sblow_fish, gray_fish, gray_shark, black_shark, greenorange_shark, pink_dolphin, blue_dolphin]
