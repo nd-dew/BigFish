@@ -42,15 +42,16 @@ class Player():
 
 
     def __init__(self, game):
-        self.speed = 5
-        self.size = [45, 45] # [width, height]
-        self.sizes = [[45, 45], [55, 55], [70, 70], [90, 90], [130, 130], [200, 200]]
+        self.speed = game.settings.player_speed
+        self.size = [30, 30] # [width, height]
+        self.w_ratio = 36/48 # ratio between the square image and the real width of the fish
+        # self.sizes = [[30, 30], [40, 40], [50, 50], [65, 65], [85, 85], [120, 120]]
+        # self.widths = [30, 40, 50, 65, 85, 120]
+        self.widths = game.settings.player_widths # list of widths
         self.size_level = 0 # initial size level = first element of the sizes list
 
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
-
-        # self.change_size(1)  # Used for testing, not needed in here
 
         # Getting player sprites
         self.sprites = {'steady': pg.image.load(game.settings.player_steady).convert_alpha(), #convert_alpha preserves transparency in PNG images
@@ -59,7 +60,11 @@ class Player():
 
         # Initial image rescaling
         self.img = self.sprites['steady']
-        self.size = self.sizes[self.size_level]
+        self.w_ratio = self.img.get_width()/self.img.get_height()
+        # self.size = self.sizes[self.size_level]
+        self.width = self.widths[self.size_level]
+        self.height = int(self.width/self.w_ratio)
+        self.size = [self.width, self.height]
         self.img = pg.transform.scale(self.img, self.size)
         self.rect = self.img.get_rect()
 
@@ -70,28 +75,38 @@ class Player():
         self.left = False # initial movement to the left
 
         # Dynamic Hitbox, hardcoded
-        self.hitbox = pg.Rect(self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
+        # self.hitbox = self.rect.inflate(-0.9 * self.rect.width, 0)
+        self.hitbox = self.rect.copy()
+        # self.hitbox.width = 0.7 * self.rect.width
+        # self.hitbox.midbottom = self.rect.midbottom
+        # self.hitbox = pg.Rect(self.rect.x, self.rect.y, self.rect.w * 0.7, self.rect.h)
 
     def update(self):
         """ to be added
         """
-        self.size = self.sizes[self.size_level]
+        # self.size = self.sizes[self.size_level]
+        self.width = self.widths[self.size_level]
+        self.height = int(self.width/self.w_ratio)
+        self.size = [self.width, self.height]
 
         if self.right and not self.left and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
-            self.img = pg.transform.scale(self.img, self.size)
         elif self.left and not self.right and self.rect.left > self.screen_rect.left:
             self.rect.x -= self.speed
             self.img = self.sprites["tailRight"]
-            self.img = pg.transform.scale(self.img, self.size)
         else:
-            # self.rect.x += 0
             self.img = self.sprites["steady"]
-            self.img = pg.transform.scale(self.img, self.size)
 
+        self.img = pg.transform.scale(self.img, self.size)
+        # self.rect = self.img.get_rect()
         # Dynamic Hitbox, hardcoded again
-        self.hitbox = pg.Rect(self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
+        self.hitbox = self.rect.copy()
+        # self.hitbox = self.rect.inflate(-0.9 * self.rect.width, 0)
+        # self.hitbox.width = 0.7 * self.rect.width
+        # self.hitbox.midbottom = self.rect.midbottom
+
+        # self.hitbox = pg.Rect(self.rect.x, self.rect.y, self.rect.w * 0.7, self.rect.h)
 
 
     def blit_player(self, bbox=False, hitbox=False):

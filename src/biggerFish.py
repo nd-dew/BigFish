@@ -49,6 +49,7 @@ class BiggerFish:
         # Initializing high score and score
         self.high_score = 0
         self.score = 0
+        self.level = 0
 
         # SOUND EFFECTS
         self.sound_start = pg.mixer.Sound('resources/music/start.mp3')
@@ -93,8 +94,9 @@ class BiggerFish:
             self.collision_general()
             self.screen_update()  # Updating screen
 
-            if self.score == 2 and self.player.size_level == 1:
+            if self.score == self.settings.level_points[self.level] and self.level < len(self.settings.level_points)-1:
                 self.player.increase_size()
+                self.level += 1
 
             # PERFORMANCE, Don't limit frames if checking performance
             if check_performance:
@@ -166,10 +168,10 @@ class BiggerFish:
 
         # Draw enemies in the screen (iterate over the list of enemies)
         for enem in self.enemies:  # Can be reduced with sprite.group
-            enem.blit_enemy(bbox=False, hitbox=False)
+            enem.blit_enemy(bbox=True, hitbox=True)
 
         # Draw player on the screen
-        self.player.blit_player(bbox=False, hitbox=False)  # drawing our fish on top of our background
+        self.player.blit_player(bbox=True, hitbox=True)  # drawing our fish on top of our background
 
         # Draw score
         self.screen.blit(self.settings.score_text, [0, 0])
