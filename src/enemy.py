@@ -6,15 +6,14 @@ class Enemy():
         rand_index = randrange(len(game.settings.enemies))
         # This should generate enemy randomly 
         self.speed = game.settings.enemies[rand_index].speed
-        # self.size = [24, 48] # width, height
         self.size = game.settings.enemies[rand_index].size
 
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
 
-        self.sprites = [pg.image.load(game.settings.enemies[rand_index].img_path_R).convert(),
-                        pg.image.load(game.settings.enemies[rand_index].img_path_S).convert(),
-                        pg.image.load(game.settings.enemies[rand_index].img_path_L).convert()]
+        self.sprites = [pg.image.load(game.settings.enemies[rand_index].img_path_R).convert_alpha(),
+                        pg.image.load(game.settings.enemies[rand_index].img_path_S).convert_alpha(),
+                        pg.image.load(game.settings.enemies[rand_index].img_path_L).convert_alpha()]
 
         self.current_sp = 0
         self.img = self.sprites[self.current_sp]

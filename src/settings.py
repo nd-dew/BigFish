@@ -58,7 +58,7 @@ class Settings:
 
         # ENEMIES
         """(speed, width, height, path_R, path_S, path_L)"""
-        red_fish = EnemyType(random.uniform(0.75,1.25), width=48, height=48, path_R="resources/images/enemies/red1.png", path_S="resources/images/enemies/red2.png", path_L="resources/images/enemies/red3.png")
+        red_fish = EnemyType(random.uniform(0.75,1.25), width=40, height=40, path_R="resources/images/enemies/red1.png", path_S="resources/images/enemies/red2.png", path_L="resources/images/enemies/red3.png")
         green_fish = EnemyType(random.uniform(1.75,2.25), width=60, height=60, path_R="resources/images/enemies/green1.png", path_S="resources/images/enemies/green2.png", path_L="resources/images/enemies/green3.png")
         brown_fish = EnemyType(random.uniform(1.75,2.25), width=80, height=80, path_R="resources/images/enemies/brown1.png", path_S="resources/images/enemies/brown2.png", path_L="resources/images/enemies/brown3.png")
         white_fish = EnemyType(random.uniform(0.75,1.25), width=50, height=50, path_R="resources/images/enemies/white1.png", path_S="resources/images/enemies/white2.png", path_L="resources/images/enemies/white3.png")

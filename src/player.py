@@ -43,23 +43,23 @@ class Player():
 
     def __init__(self, game):
         self.speed = 5
-        self.size = [48, 48] # [width, height]
-        self.sizes = [[48, 48], [60, 60], [100, 100], [120, 120], [140, 140]]
+        self.size = [45, 45] # [width, height]
+        self.sizes = [[45, 45], [55, 55], [70, 70], [90, 90], [130, 130], [200, 200]]
         self.size_level = 0 # initial size level = first element of the sizes list
 
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
 
-        self.change_size(1)  # Used for testing, not needed in here
+        # self.change_size(1)  # Used for testing, not needed in here
 
         # Getting player sprites
-        self.sprites = {'steady': pg.image.load(game.settings.player_steady).convert(),
-                        'tailRight': pg.image.load(game.settings.player_tailRight).convert(),
-                        'tailLeft': pg.image.load(game.settings.player_tailLeft).convert()}
+        self.sprites = {'steady': pg.image.load(game.settings.player_steady).convert_alpha(), #convert_alpha preserves transparency in PNG images
+                        'tailRight': pg.image.load(game.settings.player_tailRight).convert_alpha(),
+                        'tailLeft': pg.image.load(game.settings.player_tailLeft).convert_alpha()}
 
         # Initial image rescaling
         self.img = self.sprites['steady']
-        self.size = [self.sizes[self.size_level][0], self.sizes[self.size_level][1]]
+        self.size = self.sizes[self.size_level]
         self.img = pg.transform.scale(self.img, self.size)
         self.rect = self.img.get_rect()
 
@@ -75,6 +75,8 @@ class Player():
     def update(self):
         """ to be added
         """
+        self.size = self.sizes[self.size_level]
+
         if self.right and not self.left and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
@@ -112,3 +114,6 @@ class Player():
             specify which dict of sprites should be used (among sizes)
         """
         self.size_level = level
+
+    def increase_size(self):
+        self.size_level += 1

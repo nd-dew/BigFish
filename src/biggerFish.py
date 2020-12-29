@@ -93,6 +93,9 @@ class BiggerFish:
             self.collision_general()
             self.screen_update()  # Updating screen
 
+            if self.score == 2 and self.player.size_level == 1:
+                self.player.increase_size()
+
             # PERFORMANCE, Don't limit frames if checking performance
             if check_performance:
                 self._check_performance()
