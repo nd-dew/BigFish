@@ -99,7 +99,8 @@ class Player():
             self.img = self.sprites["steady"]
 
         self.img = pg.transform.scale(self.img, self.size)
-        # self.rect = self.img.get_rect()
+        self.rect.size = self.size
+
         # Dynamic Hitbox, hardcoded again
         self.hitbox = self.rect.copy()
         # self.hitbox = self.rect.inflate(-0.9 * self.rect.width, 0)
@@ -118,17 +119,6 @@ class Player():
         if hitbox:
             pg.draw.rect(self.screen, pg.Color('red'), self.hitbox, width=1)
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
-
-    def change_size(self, level):
-        """
-        Modify current sprite set into chosen one.
-
-        Parameters
-        ----------
-        level : int
-            specify which dict of sprites should be used (among sizes)
-        """
-        self.size_level = level
 
     def increase_size(self):
         self.size_level += 1

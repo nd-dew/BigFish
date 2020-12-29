@@ -6,7 +6,7 @@ class Enemy():
         rand_index = randrange(len(game.settings.enemies))
         # This should generate enemy randomly 
         self.speed = game.settings.enemies[rand_index].speed
-        self.size = game.settings.enemies[rand_index].size
+        self.width = game.settings.enemies[rand_index].width
 
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
@@ -17,6 +17,9 @@ class Enemy():
 
         self.current_sp = 0
         self.img = self.sprites[self.current_sp]
+        self.w_ratio = self.img.get_width() / self.img.get_height()
+        self.height = int(self.width / self.w_ratio)
+        self.size = [self.width, self.height]
         self.img = pg.transform.scale(self.img,  self.size) # adjusting initial size
         self.rect = self.img.get_rect() # x,y, heights, width
         self.screen_margin = self.size[0] // 2 # first element is width
@@ -56,4 +59,6 @@ class Enemy():
         if self.current_sp >= len(self.sprites):
             self.current_sp = 0
         self.img = self.sprites[int(self.current_sp)]
+        self.height = int(self.width / self.w_ratio)
+        self.size = [self.width, self.height]
         self.img = pg.transform.scale(self.img,  self.size) # adjusting size
