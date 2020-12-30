@@ -43,10 +43,6 @@ class Player():
 
     def __init__(self, game):
         self.speed = game.settings.player_speed
-        # self.size = [30, 30] # [width, height]
-        # self.w_ratio = 36/48 # ratio between the square image and the real width of the fish
-        # self.sizes = [[30, 30], [40, 40], [50, 50], [65, 65], [85, 85], [120, 120]]
-        # self.widths = [30, 40, 50, 65, 85, 120]
         self.hit_widths = game.settings.player_hit_widths
         self.hit_ratio = game.settings.player_hit_ratio
         self.widths = [int(wid / self.hit_ratio) for wid in self.hit_widths] # list of widths
