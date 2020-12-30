@@ -28,25 +28,15 @@ class Enemy():
         self.rect.midbottom = (self.x_pos, self.y_pos)
 
         # Dynamic Hitbox, hardcoded
-        self.hitbox = pg.Rect(
-                       self.rect.x + self.rect.w // 3.3,
-                       self.rect.y + self.rect.h // 8,
-                       self.rect.w - self.rect.w // 1.7,
-                       self.rect.h - self.rect.h // 5
-        )
+        self.hitbox = self.rect.copy() # creating hitbox at the same position as the old rect
+        self.hitbox.width = game.settings.enemies[rand_index].hit_width
 
     def update(self):
         self.y_pos += self.speed
         self.sprite_image()
         self.rect.midbottom = (self.x_pos, self.y_pos)
+        self.hitbox.midbottom = self.rect.midbottom
 
-        # Dynamic Hitbox, hardcoded
-        self.hitbox = pg.Rect(
-                       self.rect.x + self.rect.w // 3.3,
-                       self.rect.y + self.rect.h // 8,
-                       self.rect.w - self.rect.w // 1.7,
-                       self.rect.h - self.rect.h // 5
-        )
     def blit_enemy(self, bbox=False, hitbox=False):
         if bbox:
             pg.draw.rect(self.screen, pg.Color('green'), self.rect, width=1)
@@ -61,4 +51,4 @@ class Enemy():
         self.img = self.sprites[int(self.current_sp)]
         self.height = int(self.width / self.w_ratio)
         self.size = [self.width, self.height]
-        self.img = pg.transform.scale(self.img,  self.size) # adjusting size
+        self.img = pg.transform.scale(self.img, self.size) # adjusting size

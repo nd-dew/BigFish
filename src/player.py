@@ -43,11 +43,13 @@ class Player():
 
     def __init__(self, game):
         self.speed = game.settings.player_speed
-        self.size = [30, 30] # [width, height]
-        self.w_ratio = 36/48 # ratio between the square image and the real width of the fish
+        # self.size = [30, 30] # [width, height]
+        # self.w_ratio = 36/48 # ratio between the square image and the real width of the fish
         # self.sizes = [[30, 30], [40, 40], [50, 50], [65, 65], [85, 85], [120, 120]]
         # self.widths = [30, 40, 50, 65, 85, 120]
-        self.widths = game.settings.player_widths # list of widths
+        self.hit_widths = game.settings.player_hit_widths
+        self.hit_ratio = game.settings.player_hit_ratio
+        self.widths = [int(wid / self.hit_ratio) for wid in self.hit_widths] # list of widths
         self.size_level = 0 # initial size level = first element of the sizes list
 
         self.screen = game.screen
@@ -60,14 +62,12 @@ class Player():
 
         # Initial image rescaling
         self.img = self.sprites['steady']
-        self.w_ratio = self.img.get_width()/self.img.get_height()
-        # self.size = self.sizes[self.size_level]
+        self.w_ratio = self.img.get_width() / self.img.get_height() # Width to Height ratio of the original image
         self.width = self.widths[self.size_level]
-        self.height = int(self.width/self.w_ratio)
+        self.height = int(self.width / self.w_ratio)
         self.size = [self.width, self.height]
         self.img = pg.transform.scale(self.img, self.size)
         self.rect = self.img.get_rect()
-
         # Setting initial position
         self.rect.midbottom = self.screen_rect.midbottom # midbottom point of the screen is set to be equal with  midbnottom point of the player
 
@@ -75,16 +75,13 @@ class Player():
         self.left = False # initial movement to the left
 
         # Dynamic Hitbox, hardcoded
-        # self.hitbox = self.rect.inflate(-0.9 * self.rect.width, 0)
         self.hitbox = self.rect.copy()
-        # self.hitbox.width = 0.7 * self.rect.width
-        # self.hitbox.midbottom = self.rect.midbottom
-        # self.hitbox = pg.Rect(self.rect.x, self.rect.y, self.rect.w * 0.7, self.rect.h)
+        self.hitbox.width = int(self.rect.width * self.hit_ratio)
+        self.hitbox.midbottom = self.rect.midbottom
 
     def update(self):
         """ to be added
         """
-        # self.size = self.sizes[self.size_level]
         self.width = self.widths[self.size_level]
         self.height = int(self.width/self.w_ratio)
         self.size = [self.width, self.height]
@@ -100,14 +97,12 @@ class Player():
 
         self.img = pg.transform.scale(self.img, self.size)
         self.rect.size = self.size
+        self.rect.bottom = self.screen_rect.bottom # when resizing, resetting the y coordinate of the bottom
 
         # Dynamic Hitbox, hardcoded again
-        self.hitbox = self.rect.copy()
-        # self.hitbox = self.rect.inflate(-0.9 * self.rect.width, 0)
-        # self.hitbox.width = 0.7 * self.rect.width
-        # self.hitbox.midbottom = self.rect.midbottom
-
-        # self.hitbox = pg.Rect(self.rect.x, self.rect.y, self.rect.w * 0.7, self.rect.h)
+        self.hitbox.width = int(self.rect.width * self.hit_ratio)
+        self.hitbox.height = self.rect.height
+        self.hitbox.midbottom = self.rect.midbottom
 
 
     def blit_player(self, bbox=False, hitbox=False):

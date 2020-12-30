@@ -33,9 +33,9 @@ class BiggerFish:
         self.SPAWN_EVENT = pg.USEREVENT  # TODO use generator in here 'next( self.event_id_generator)'
 
         # Setting the boolean that handles the running of the game and the loop inside the main menu
-        self.running = True #loop inside game
-        self.loop = False #loop inside main menu
-        self.game_over = False #loop inside gameover
+        self.running = True # loop inside game
+        self.loop = False # loop inside main menu
+        self.game_over = False # loop inside gameover
 
         # Printing things nicely in console
         self.print_buffer = ''
@@ -71,7 +71,7 @@ class BiggerFish:
 
             # MAIN MENU HOLDING THE GAME FROM STARTING
             if self.go_main_menu == True:
-                self.main_menu_screen() #HERE IS THE INFINITE LOOP METHOD THAT HOLDS THE GAME IN MAIN MENU
+                self.main_menu_screen() # HERE IS THE INFINITE LOOP METHOD THAT HOLDS THE GAME IN MAIN MENU
                 self.go_main_menu = False
 
                 # NEW GAME INITIALIZATION (INITIALIZED VARIABLES LIKE PLAYER, ENEMIES AND SO ON MUST REMAIN HERE)
@@ -168,10 +168,10 @@ class BiggerFish:
 
         # Draw enemies in the screen (iterate over the list of enemies)
         for enem in self.enemies:  # Can be reduced with sprite.group
-            enem.blit_enemy(bbox=True, hitbox=True)
+            enem.blit_enemy(bbox=False, hitbox=False)
 
         # Draw player on the screen
-        self.player.blit_player(bbox=True, hitbox=True)  # drawing our fish on top of our background
+        self.player.blit_player(bbox=False, hitbox=False)  # drawing our fish on top of our background
 
         # Draw score
         self.screen.blit(self.settings.score_text, [0, 0])
@@ -181,10 +181,13 @@ class BiggerFish:
 
     def get_high_score(self):
         return self.high_score
+
     def set_high_score(self, new_high_score):
         self.high_score = new_high_score
+
     def get_score(self):
         return self.score
+
     def increase_score(self, value):
         self.score += value
 
@@ -198,7 +201,6 @@ class BiggerFish:
                     if enemy.hitbox.w < self.player.hitbox.w:
                         self.sound_bite.play()
                         self.enemies.remove(enemy)
-                        #self.counter.add_points(1)
                         self.increase_score(1)
                     # GAME OVER
                     else:
