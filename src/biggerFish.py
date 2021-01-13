@@ -307,7 +307,9 @@ class DebugHitboxScene(Scene):
 
     def __init__(self, biggerFish):
         self.biggerFish=biggerFish
-        
+
+        self.score=0
+
         self.generated_artificial_enemies=[]
         previous_rect = pg.Rect(0, 0, 40, 3)
         previous_rect.topleft =  self.biggerFish.screen.get_rect().topleft
@@ -333,10 +335,16 @@ class DebugHitboxScene(Scene):
                 if event.key == pg.K_RETURN or event.key == pg.K_KP_ENTER:
                     self.manager.go_to(MenuScene(self.biggerFish))
 
+                if event.key == pg.K_UP:
+                        self.score+=1
+
+                if event.key == pg.K_DOWN:
+                        self.score-=1
+
     def update(self):
         for r in self.generated_artificial_enemies:
             r.update(debugMode=True)
-        self.player.update()
+        self.player.update(self.score)
 
     def render(self, screen): # It sould take screen to render things
         previous_rect=pg.Rect(0,0,40,3)
@@ -346,3 +354,5 @@ class DebugHitboxScene(Scene):
             r.blit_enemy(bbox=True, hitbox=True)
         self.player.blit_player(bbox=True, hitbox=True)
         self.biggerFish.clock.tick(30)
+
+        self.display_text(screen, str(self.score), 20, 470, 100)
