@@ -93,9 +93,7 @@ class Player():
             # self.rect.x += 0
             self.img = self.sprites["steady"]
             # self.img = pg.transform.scale(self.img, self.size)
-            self.img = pg.transform.scale(self.img, [self.rect.w, self.rect.h]
-                                          )
-
+            self.img = pg.transform.scale(self.img, [self.rect.w, self.rect.h])
 
         # # Dynamic Hitbox, hardcoded again
         # self.hitbox = pg.Rect(self.rect.x + 13, self.rect.y+2, self.rect.w - 27, self.rect.h-13)
@@ -123,6 +121,7 @@ class Player():
         self.size_level = level
 
     def _grow_if_ready(self, score):
+
         # iterate over thresholds and compare them with current score
         reached_threshold=0
         for threshold in self.biggerFish.settings.player_sizes.keys():
@@ -130,6 +129,7 @@ class Player():
                 reached_threshold=threshold
         self.rect.w=  self.biggerFish.settings.player_sizes[reached_threshold]['width']
         self.rect.h=  self.biggerFish.settings.player_sizes[reached_threshold]['height']
+        self.rect.bottom = self.screen_rect.bottom + self.biggerFish.settings.player_sizes[reached_threshold]['y_offset']
         hitbox_offset_and_size =self.biggerFish.settings.player_sizes[reached_threshold]['hitbox_offset_and_size']
         self.hitbox = pg.Rect(
                 self.rect.x + hitbox_offset_and_size[0],

@@ -80,6 +80,6 @@ class Settings:
         # Player Evolution
         """{num_of_point_to_evolve: [x_size, y_size]}"""
         self.player_sizes = {
-            0: dict(width=30, height=30, hitbox_offset_and_size=[15,0,30,100]),
-            1: dict(width=60, height=60, hitbox_offset_and_size=[15,0,70,100]),
+            0: dict(width=30, height=30, hitbox_offset_and_size=[15,0,30,100], y_offset=0),
+            1: dict(width=60, height=60, hitbox_offset_and_size=[15,0,70,100], y_offset=40),
         }
