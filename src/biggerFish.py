@@ -56,8 +56,8 @@ class BiggerFish:
         self.sound_bite = pg.mixer.Sound('resources/music/bite0.mp3')
         self.sound_enemy = pg.mixer.Sound('resources/music/enemy_bite.mp3')
 
-        # Scenes
-        self.manager= SceneManager()
+        # Scenes MANAGER
+        self.manager= SceneManager(self)
 
     def run_game(self, check_performance=False):
         while self.running:  # Start of the game's main loop
@@ -69,7 +69,9 @@ class BiggerFish:
 
             self.manager.scene.handle_events()
             self.manager.scene.update()
-            self.manager.scene.render()
+            self.manager.scene.render(self.screen)
+            pg.display.flip() # TODO Maybe place it inside scene????
+            self.clock.tick(60)
             continue
 
 
@@ -117,7 +119,7 @@ class BiggerFish:
     def main_menu_screen(self):
         pg.mixer.music.load("resources/music/casimps1_-_Fishes_in_the_Sea.mp3")
         pg.mixer.music.play(1, 0, 0)
-        self.loop = True
+        self.loop = True # I.E if we are in MENU SCENE
         while self.loop:
             self.current_main_menu_animation += 0.4
             if self.current_main_menu_animation >= len(self.settings.main_menu_animation):
@@ -298,8 +300,9 @@ class SceneManager():
     """
     This class is uded to change scenes and hold currently used.
     """
-    def __init__(self):
+    def __init__(self, biggerFish):
         self.go_to(MenuScene())
+        self.biggerFish= biggerFish
 
     def go_to(self, scene):
         self.scene = scene
@@ -315,28 +318,53 @@ class Scene():
     def update(self):
         print("uh-oh, you didn't override this in the child class")
 
-    def render(self): # It sould take screen to render things
+    def render(self, screen): # It sould take screen to render things
         print("uh-oh, you didn't override this in the child class")
 
 class MenuScene(Scene):
+
+    def __init__(self):
+        # Load music and play it in a loop
+        self.music= pg.mixer.music.load("resources/music/casimps1_-_Fishes_in_the_Sea.mp3")
+        pg.mixer.music.play(-1)
+
+        # Load BG animations
+        self.main_menu_animation = []
+        for j in range(0, 28):
+            string2 = 'resources/images/main_menu/main_menu_' + str(j) + '.png'
+            self.main_menu_animation.append(pg.image.load(string2))
+
+        # Set first bg image in sequence as current
+        self.current_main_menu_animation = 0
+        self.main_menu_surface = self.main_menu_animation[self.current_main_menu_animation]
+
+        # Load Title displayed over BG
+        self.main_menu_text = pg.image.load("resources/images/main_menu/all_menu.png")
+
     def handle_events(self):
         for event in pg.event.get():
-            if event.type == pg.KEYDOWN:  # Check for events when a keypress is done
-                    if event.key == pg.K_RIGHT:
-                        self.player.right = True
-                    elif event.key == pg.K_LEFT:
-                        self.player.left = True
-                elif event.type == pg.KEYUP:
-                    if event.key == pg.K_RIGHT:
-                        self.player.right = False
-                    elif event.key == pg.K_LEFT:
-                        self.player.left = False
-                if event.type == self.SPAWN_EVENT:  # TODO change to elif
-                    self.spawn_enemies()
-            else:
-                if event.type == pg.QUIT or event.type == pg.K_ESCAPE:
-                    self.running = False
-                # KEYBOARD INPUT
-                elif event.type == pg.KEYDOWN:  # Check for events when a keypress is done
-                    if event.key == pg.K_RETURN or event.key == pg.K_KP_ENTER:
-                        self.loop = False
+            if event.type == pg.KEYDOWN:  # Change Scene to Game if enter is pressed
+                if event.key == pg.K_RETURN or event.key == pg.K_KP_ENTER:
+                    self.manager.go_to(GameScene())
+
+    def update(self):
+        print("MenuScene update")
+        self.current_main_menu_animation += 0.4
+        if self.current_main_menu_animation >= len(self.main_menu_animation):
+            self.current_main_menu_animation = 0
+        self.main_menu_surface = self.main_menu_animation[int(self.current_main_menu_animation)]
+
+    def render(self, screen): # It sould take screen to render things
+        print("uh-oh, you didn't override this in the child class")
+        screen.blit(self.main_menu_surface, [0, 0])
+        screen.blit(self.main_menu_text, [0,0])
+
+class GameScene(Scene):
+    def update(self):
+        print("GameScene update")
+
+    def handle_events(self):
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:  # Change Scene to Game if enter is pressed
+                if event.key == pg.K_RETURN or event.key == pg.K_KP_ENTER:
+                    self.manager.go_to(MenuScene())
