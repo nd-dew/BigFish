@@ -42,28 +42,27 @@ class Player():
 
 
     def __init__(self, game):
-        self.speed = game.settings.player_speed
-        self.hit_widths = game.settings.player_hit_widths
-        self.hit_ratio = game.settings.player_hit_ratio
-        self.widths = [int(wid / self.hit_ratio) for wid in self.hit_widths] # list of widths
+        self.speed = 5
+        self.size = [48, 48] # [width, height]
+        self.sizes = [[48, 48], [60, 60], [100, 100], [120, 120], [140, 140]]
         self.size_level = 0 # initial size level = first element of the sizes list
 
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
 
+        self.change_size(1)  # Used for testing, not needed in here
+
         # Getting player sprites
-        self.sprites = {'steady': pg.image.load(game.settings.player_steady).convert_alpha(), #convert_alpha preserves transparency in PNG images
-                        'tailRight': pg.image.load(game.settings.player_tailRight).convert_alpha(),
-                        'tailLeft': pg.image.load(game.settings.player_tailLeft).convert_alpha()}
+        self.sprites = {'steady': pg.image.load(game.settings.player_steady).convert(),
+                        'tailRight': pg.image.load(game.settings.player_tailRight).convert(),
+                        'tailLeft': pg.image.load(game.settings.player_tailLeft).convert()}
 
         # Initial image rescaling
         self.img = self.sprites['steady']
-        self.w_ratio = self.img.get_width() / self.img.get_height() # Width to Height ratio of the original image
-        self.width = self.widths[self.size_level]
-        self.height = int(self.width / self.w_ratio)
-        self.size = [self.width, self.height]
+        self.size = [self.sizes[self.size_level][0], self.sizes[self.size_level][1]]
         self.img = pg.transform.scale(self.img, self.size)
         self.rect = self.img.get_rect()
+
         # Setting initial position
         self.rect.midbottom = self.screen_rect.midbottom # midbottom point of the screen is set to be equal with  midbnottom point of the player
 
@@ -71,34 +70,26 @@ class Player():
         self.left = False # initial movement to the left
 
         # Dynamic Hitbox, hardcoded
-        self.hitbox = self.rect.copy()
-        self.hitbox.width = int(self.rect.width * self.hit_ratio)
-        self.hitbox.midbottom = self.rect.midbottom
+        self.hitbox = pg.Rect(self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
 
     def update(self):
         """ to be added
         """
-        self.width = self.widths[self.size_level]
-        self.height = int(self.width/self.w_ratio)
-        self.size = [self.width, self.height]
-
         if self.right and not self.left and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
-            self.img = self.sprites["tailLeft"]
+            self.img = self.sprites["tailRight"]
+            self.img = pg.transform.scale(self.img, self.size)
         elif self.left and not self.right and self.rect.left > self.screen_rect.left:
             self.rect.x -= self.speed
-            self.img = self.sprites["tailRight"]
+            self.img = self.sprites["tailLeft"]
+            self.img = pg.transform.scale(self.img, self.size)
         else:
+            # self.rect.x += 0
             self.img = self.sprites["steady"]
-
-        self.img = pg.transform.scale(self.img, self.size)
-        self.rect.size = self.size
-        self.rect.bottom = self.screen_rect.bottom # when resizing, resetting the y coordinate of the bottom
+            self.img = pg.transform.scale(self.img, self.size)
 
         # Dynamic Hitbox, hardcoded again
-        self.hitbox.width = int(self.rect.width * self.hit_ratio)
-        self.hitbox.height = self.rect.height
-        self.hitbox.midbottom = self.rect.midbottom
+        self.hitbox = pg.Rect(self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
 
 
     def blit_player(self, bbox=False, hitbox=False):
@@ -111,5 +102,13 @@ class Player():
             pg.draw.rect(self.screen, pg.Color('red'), self.hitbox, width=1)
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
 
-    def increase_size(self):
-        self.size_level += 1
+    def change_size(self, level):
+        """
+        Modify current sprite set into chosen one.
+
+        Parameters
+        ----------
+        level : int
+            specify which dict of sprites should be used (among sizes)
+        """
+        self.size_level = level
