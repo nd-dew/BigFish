@@ -77,11 +77,11 @@ class Player():
         """
         if self.right and not self.left and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
-            self.img = self.sprites["tailLeft"]
+            self.img = self.sprites["tailRight"]
             self.img = pg.transform.scale(self.img, self.size)
         elif self.left and not self.right and self.rect.left > self.screen_rect.left:
             self.rect.x -= self.speed
-            self.img = self.sprites["tailRight"]
+            self.img = self.sprites["tailLeft"]
             self.img = pg.transform.scale(self.img, self.size)
         else:
             # self.rect.x += 0

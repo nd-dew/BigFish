@@ -22,7 +22,6 @@ class BiggerFish:
 
         # Events ID generator, created to keep track of eventID
         # user event ID has to be between pg.USEREVENT and pg.NUMEVENTS
-        # TODO can be probably in scene
         self.event_id_generator = (id for id in range(pg.USEREVENT + 1, pg.NUMEVENTS))
 
 
@@ -35,19 +34,16 @@ class BiggerFish:
     def run_game(self, check_performance=False):
         while self.running:  # Start of the game's main loop
 
-            # SCENE concept introduced
             self.manager.scene.handle_events()
             self.manager.scene.update()
             self.manager.scene.render(self.screen)
-            pg.display.flip() # TODO Maybe place it inside scene????
-            # self.clock.tick(60)
+            pg.display.flip() # TODO Maybe place it inside scene???? with decorators
 
             # PERFORMANCE, Don't limit frames if checking performance
             if check_performance:
                 self._check_performance()
             else:
                 self.clock.tick(self.settings.FPS)
-
 
 
     def _check_performance(self, num_of_frame_to_average=100, printing=True, log=True):
@@ -87,7 +83,9 @@ class SceneManager():
     This class is uded to change scenes and hold currently used.
     """
     def __init__(self, biggerFish):
+        self.biggerFish= biggerFish
         self.go_to(MenuScene(biggerFish))
+        self.mama="go daddy go"
 
     def go_to(self, scene):
         self.scene = scene
@@ -205,7 +203,7 @@ class GameScene(Scene):
                 elif event.key == pg.K_LEFT:
                     self.player.left = False
 
-            elif event.type == self.SPAWN_EVENT:  # TODO change to elif
+            elif event.type == self.SPAWN_EVENT:
                 self._spawn_enemies()
 
     def update(self):
