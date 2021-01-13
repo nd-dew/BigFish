@@ -53,9 +53,9 @@ class Player():
         self.change_size(1)  # Used for testing, not needed in here
 
         # Getting player sprites
-        self.sprites = {'steady': pg.image.load(game.settings.player_steady).convert(),
-                        'tailRight': pg.image.load(game.settings.player_tailRight).convert(),
-                        'tailLeft': pg.image.load(game.settings.player_tailLeft).convert()}
+        self.sprites = {'steady': pg.image.load(game.settings.player_steady).convert_alpha(),
+                        'tailRight': pg.image.load(game.settings.player_tailRight).convert_alpha(),
+                        'tailLeft': pg.image.load(game.settings.player_tailLeft).convert_alpha()}
 
         # Initial image rescaling
         self.img = self.sprites['steady']
@@ -77,11 +77,11 @@ class Player():
         """
         if self.right and not self.left and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
-            self.img = self.sprites["tailRight"]
+            self.img = self.sprites["tailLeft"]
             self.img = pg.transform.scale(self.img, self.size)
         elif self.left and not self.right and self.rect.left > self.screen_rect.left:
             self.rect.x -= self.speed
-            self.img = self.sprites["tailLeft"]
+            self.img = self.sprites["tailRight"]
             self.img = pg.transform.scale(self.img, self.size)
         else:
             # self.rect.x += 0

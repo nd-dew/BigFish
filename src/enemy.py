@@ -12,9 +12,9 @@ class Enemy():
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
 
-        self.sprites = [pg.image.load(game.settings.enemies[rand_index].img_path_R).convert(),
-                        pg.image.load(game.settings.enemies[rand_index].img_path_S).convert(),
-                        pg.image.load(game.settings.enemies[rand_index].img_path_L).convert()]
+        self.sprites = [pg.image.load(game.settings.enemies[rand_index].img_path_R).convert_alpha(),
+                        pg.image.load(game.settings.enemies[rand_index].img_path_S).convert_alpha(),
+                        pg.image.load(game.settings.enemies[rand_index].img_path_L).convert_alpha()]
 
         self.current_sp = 0
         self.img = self.sprites[self.current_sp]
