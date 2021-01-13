@@ -56,8 +56,22 @@ class BiggerFish:
         self.sound_bite = pg.mixer.Sound('resources/music/bite0.mp3')
         self.sound_enemy = pg.mixer.Sound('resources/music/enemy_bite.mp3')
 
+        # Scenes
+        self.manager= SceneManager()
+
     def run_game(self, check_performance=False):
         while self.running:  # Start of the game's main loop
+
+            # SCENE concept introduced
+            # quit is something above scenes so it has to be outside
+            if pg.event.get(pg.QUIT):
+                self.running = False
+
+            self.manager.scene.handle_events()
+            self.manager.scene.update()
+            self.manager.scene.render()
+            continue
+
 
             # GAME OVER LOOP FOR A COUPLE OF SECS
             wait = 0
@@ -279,3 +293,50 @@ class BiggerFish:
                 if log:
                     logging.info('{one_loop_time=: .6f} s {(1 / one_loop_time): .1f} FPS possible')
                 self.loopNumber = 0
+
+class SceneManager():
+    """
+    This class is uded to change scenes and hold currently used.
+    """
+    def __init__(self):
+        self.go_to(MenuScene())
+
+    def go_to(self, scene):
+        self.scene = scene
+        self.scene.manager = self
+
+class Scene():
+    def __init__(self):
+        pass
+
+    def handle_events(self):
+        print("uh-oh, you didn't override this in the child class")
+
+    def update(self):
+        print("uh-oh, you didn't override this in the child class")
+
+    def render(self): # It sould take screen to render things
+        print("uh-oh, you didn't override this in the child class")
+
+class MenuScene(Scene):
+    def handle_events(self):
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:  # Check for events when a keypress is done
+                    if event.key == pg.K_RIGHT:
+                        self.player.right = True
+                    elif event.key == pg.K_LEFT:
+                        self.player.left = True
+                elif event.type == pg.KEYUP:
+                    if event.key == pg.K_RIGHT:
+                        self.player.right = False
+                    elif event.key == pg.K_LEFT:
+                        self.player.left = False
+                if event.type == self.SPAWN_EVENT:  # TODO change to elif
+                    self.spawn_enemies()
+            else:
+                if event.type == pg.QUIT or event.type == pg.K_ESCAPE:
+                    self.running = False
+                # KEYBOARD INPUT
+                elif event.type == pg.KEYDOWN:  # Check for events when a keypress is done
+                    if event.key == pg.K_RETURN or event.key == pg.K_KP_ENTER:
+                        self.loop = False
