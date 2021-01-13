@@ -44,8 +44,8 @@ class Enemy():
     def update(self, debugMode= False):
         if not debugMode:
             self.y_pos += self.speed
-            self.sprite_image()
             self.rect.midbottom = (self.x_pos, self.y_pos)
+        self.sprite_image()
 
         # Dynamic Hitbox, hardcoded
         self.hitbox = pg.Rect(

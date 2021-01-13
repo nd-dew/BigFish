@@ -89,7 +89,7 @@ class Player():
             self.img = pg.transform.scale(self.img, self.size)
 
         # Dynamic Hitbox, hardcoded again
-        self.hitbox = pg.Rect(self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
+        self.hitbox = pg.Rect(self.rect.x + 13, self.rect.y+2, self.rect.w - 27, self.rect.h-13)
 
 
     def blit_player(self, bbox=False, hitbox=False):

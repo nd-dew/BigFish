@@ -317,9 +317,12 @@ class DebugHitboxScene(Scene):
             e.rect.x+=1
             if e.rect.right >  self.biggerFish.screen.get_rect().right:
                 e.rect.x = 0
-                e.rect.y = e.rect.y + 120
+                e.rect.y = e.rect.y + 130
+            if i==14:
+                e.rect.y = e.rect.y + 35
             previous_rect = e.rect
             self.generated_artificial_enemies.append(e)
+        self.player = player.Player(self.biggerFish)
 
     def handle_events(self):
         for event in pg.event.get():
@@ -333,14 +336,13 @@ class DebugHitboxScene(Scene):
     def update(self):
         for r in self.generated_artificial_enemies:
             r.update(debugMode=True)
+        self.player.update()
 
     def render(self, screen): # It sould take screen to render things
         previous_rect=pg.Rect(0,0,40,3)
         previous_rect.topleft=screen.get_rect().topleft
         screen.fill((0, 0, 255))
-        e = enemy.Enemy(self.biggerFish, custom_index=1)
-        e.rect.midbottom= screen.get_rect().midbottom
-        # e.hitbox=e.rect
-        e.blit_enemy(bbox=False, hitbox=True)
         for r in self.generated_artificial_enemies:
             r.blit_enemy(bbox=True, hitbox=True)
+        self.player.blit_player(bbox=True, hitbox=True)
+        self.biggerFish.clock.tick(30)
