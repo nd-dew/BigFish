@@ -77,3 +77,9 @@ class Settings:
 
         self.enemies = [red_fish, green_fish, brown_fish, white_fish, blue_fish, ray_fish, x_blue_fish, x_pink_fish, blow_fish, sblow_fish, gray_fish, gray_shark, black_shark, greenorange_shark, pink_dolphin, blue_dolphin]
 
+        # Player Evolution
+        """{num_of_point_to_evolve: [x_size, y_size]}"""
+        self.player_sizes = {
+            0: dict(width=30, height=30, hitbox_offset_and_size=[15,0,30,100]),
+            1: dict(width=60, height=60, hitbox_offset_and_size=[15,0,70,100]),
+        }

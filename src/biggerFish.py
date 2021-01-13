@@ -211,7 +211,7 @@ class GameScene(Scene):
                 self._spawn_enemies()
 
     def update(self):
-        self.player.update()
+        self.player.update(self.score)
         for enem in self.enemies:  # Can be reduced with sprite.group
             enem.update()
         for enem in self.enemies.copy():  # deleting enemies

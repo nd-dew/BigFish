@@ -43,14 +43,15 @@ class Player():
 
     def __init__(self, game):
         self.speed = 5
-        self.size = [48, 48] # [width, height]
-        self.sizes = [[48, 48], [60, 60], [100, 100], [120, 120], [140, 140]]
-        self.size_level = 0 # initial size level = first element of the sizes list
+        # self.size = [48, 48] # [width, height]
+        # self.sizes = [[48, 48], [60, 60], [100, 100], [120, 120], [140, 140]]
+        # self.size_level = 3 # initial size level = first element of the sizes list
 
+        self.biggerFish= game
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect() # creating the rectangle of the whole screen
 
-        self.change_size(1)  # Used for testing, not needed in here
+        # self.change_size(1)  # Used for testing, not needed in here
 
         # Getting player sprites
         self.sprites = {'steady': pg.image.load(game.settings.player_steady).convert_alpha(),
@@ -59,8 +60,8 @@ class Player():
 
         # Initial image rescaling
         self.img = self.sprites['steady']
-        self.size = [self.sizes[self.size_level][0], self.sizes[self.size_level][1]]
-        self.img = pg.transform.scale(self.img, self.size)
+        # self.size = [self.sizes[self.size_level][0], self.sizes[self.size_level][1]]
+        # self.img = pg.transform.scale(self.img, self.size)
         self.rect = self.img.get_rect()
 
         # Setting initial position
@@ -72,24 +73,32 @@ class Player():
         # Dynamic Hitbox, hardcoded
         self.hitbox = pg.Rect(self.rect.x + 12, self.rect.y+5, self.rect.w - 27, self.rect.h-13)
 
-    def update(self):
+    def update(self, score=0):
         """ to be added
         """
+        self._grow_if_ready(score)
+
         if self.right and not self.left and self.rect.right < self.screen_rect.right: # ...and player movement range restriction
             self.rect.x += self.speed
             self.img = self.sprites["tailLeft"]
-            self.img = pg.transform.scale(self.img, self.size)
+            # self.img = pg.transform.scale(self.img, self.size)
+            self.img = pg.transform.scale(self.img, [self.rect.w, self.rect.h])
         elif self.left and not self.right and self.rect.left > self.screen_rect.left:
             self.rect.x -= self.speed
             self.img = self.sprites["tailRight"]
-            self.img = pg.transform.scale(self.img, self.size)
+            # self.img = pg.transform.scale(self.img, self.size)
+            self.img = pg.transform.scale(self.img, [self.rect.w, self.rect.h])
+
         else:
             # self.rect.x += 0
             self.img = self.sprites["steady"]
-            self.img = pg.transform.scale(self.img, self.size)
+            # self.img = pg.transform.scale(self.img, self.size)
+            self.img = pg.transform.scale(self.img, [self.rect.w, self.rect.h]
+                                          )
 
-        # Dynamic Hitbox, hardcoded again
-        self.hitbox = pg.Rect(self.rect.x + 13, self.rect.y+2, self.rect.w - 27, self.rect.h-13)
+
+        # # Dynamic Hitbox, hardcoded again
+        # self.hitbox = pg.Rect(self.rect.x + 13, self.rect.y+2, self.rect.w - 27, self.rect.h-13)
 
 
     def blit_player(self, bbox=False, hitbox=False):
@@ -112,3 +121,20 @@ class Player():
             specify which dict of sprites should be used (among sizes)
         """
         self.size_level = level
+
+    def _grow_if_ready(self, score):
+        # iterate over thresholds and compare them with current score
+        reached_threshold=0
+        for threshold in self.biggerFish.settings.player_sizes.keys():
+            if score >= threshold:
+                reached_threshold=threshold
+        self.rect.w=  self.biggerFish.settings.player_sizes[reached_threshold]['width']
+        self.rect.h=  self.biggerFish.settings.player_sizes[reached_threshold]['height']
+        hitbox_offset_and_size =self.biggerFish.settings.player_sizes[reached_threshold]['hitbox_offset_and_size']
+        self.hitbox = pg.Rect(
+                self.rect.x + hitbox_offset_and_size[0],
+                self.rect.y + hitbox_offset_and_size[1],
+                hitbox_offset_and_size[2],
+                hitbox_offset_and_size[3]
+        )
+
