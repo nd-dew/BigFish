@@ -30,7 +30,7 @@ class BiggerFish:
         # Events ID generator, created to keep track of eventID
         # user event ID has to be between pg.USEREVENT and pg.NUMEVENTS
         self.event_id_generator = (id for id in range(pg.USEREVENT + 1, pg.NUMEVENTS))
-        self.SPAWN_EVENT = pg.USEREVENT  # TODO use generator in here 'next( self.event_id_generator)'
+        self.SPAWN_EVENT = next( self.event_id_generator)  # TODO use generator in here 'next( self.event_id_generator)'
 
         # Setting the boolean that handles the running of the game and the loop inside the main menu
         self.running = True #loop inside game
@@ -63,10 +63,6 @@ class BiggerFish:
         while self.running:  # Start of the game's main loop
 
             # SCENE concept introduced
-            # quit is something above scenes so it has to be outside
-            if pg.event.get(pg.QUIT):
-                self.running = False
-
             self.manager.scene.handle_events()
             self.manager.scene.update()
             self.manager.scene.render(self.screen)
@@ -132,6 +128,7 @@ class BiggerFish:
             self.clock.tick(60)
             self.check_events()
 
+    # TODO MAybe move it to according scene ?
     def display_text(self, screen, text, font_size, x_pos, y_pos):
         font = pg.font.Font(pg.font.match_font('impact'), font_size)
         text_img = font.render(text, True, (0, 0, 0))
@@ -145,7 +142,7 @@ class BiggerFish:
     def check_events(self):
         for event in pg.event.get():
             # QUIT GAME
-            if(self.loop == False):
+            if(self.loop == False): # LOOP==false mean that this is GAME SCENE EVENTS
                 if event.type == pg.QUIT or event.type == pg.K_ESCAPE:
                     self.running = False
                 # KEYBOARD INPUT
@@ -301,15 +298,17 @@ class SceneManager():
     This class is uded to change scenes and hold currently used.
     """
     def __init__(self, biggerFish):
-        self.go_to(MenuScene())
-        self.biggerFish= biggerFish
+        self.go_to(MenuScene(biggerFish))
 
     def go_to(self, scene):
         self.scene = scene
         self.scene.manager = self
 
+    def p(self):
+        print('I am from manager')
+
 class Scene():
-    def __init__(self):
+    def __init__(self, biggerFish):
         pass
 
     def handle_events(self):
@@ -323,11 +322,11 @@ class Scene():
 
 class MenuScene(Scene):
 
-    def __init__(self):
+    def __init__(self, biggerFish):
         # Load music and play it in a loop
+        self.biggerFish=biggerFish
         self.music= pg.mixer.music.load("resources/music/casimps1_-_Fishes_in_the_Sea.mp3")
         pg.mixer.music.play(-1)
-
         # Load BG animations
         self.main_menu_animation = []
         for j in range(0, 28):
@@ -343,9 +342,12 @@ class MenuScene(Scene):
 
     def handle_events(self):
         for event in pg.event.get():
-            if event.type == pg.KEYDOWN:  # Change Scene to Game if enter is pressed
+            if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+                self.biggerFish.running = False
+
+            elif event.type == pg.KEYDOWN:  # Change Scene to Game if enter is pressed
                 if event.key == pg.K_RETURN or event.key == pg.K_KP_ENTER:
-                    self.manager.go_to(GameScene())
+                    self.manager.go_to(GameScene(self.biggerFish))
 
     def update(self):
         print("MenuScene update")
@@ -360,11 +362,129 @@ class MenuScene(Scene):
         screen.blit(self.main_menu_text, [0,0])
 
 class GameScene(Scene):
-    def update(self):
-        print("GameScene update")
+    def __init__(self, biggerFish):
+        self.biggerFish = biggerFish
+        self.score = 0
+        self.player = player.Player(self.biggerFish)  # player1 instance
+        self.enemies = []  # array of enemies
+        self.spawn_rate = 300  # initial spawn rate
+        pg.time.set_timer(self.biggerFish.SPAWN_EVENT, self.spawn_rate) # TODO maybe SPAWN EVENT can be used only in ths scene so without biggerFish instance
+
+        # Load Background
+        self.current_bg_animation = 0
+        self.bg_surface = self.biggerFish.settings.bg_animation[self.current_bg_animation]
+
+        # Load music and sounds
+        self.sound_game_over = pg.mixer.Sound('resources/music/game_over.mp3')
+        self.sound_bite = pg.mixer.Sound('resources/music/bite0.mp3')
+        self.sound_enemy = pg.mixer.Sound('resources/music/enemy_bite.mp3')
+        self.sound_start = pg.mixer.Sound('resources/music/start.mp3') # TODO music should be MUSIC object not Sound
+
+        # Play bg music
+        self.sound_start.play()
 
     def handle_events(self):
         for event in pg.event.get():
-            if event.type == pg.KEYDOWN:  # Change Scene to Game if enter is pressed
+            if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+                self.biggerFish.running = False
+
+            elif event.type == pg.KEYDOWN:  # Check for events when a keypress is done
+                if event.key == pg.K_RIGHT:
+                    self.player.right = True
+                elif event.key == pg.K_LEFT:
+                    self.player.left = True
+
+            elif event.type == pg.KEYUP:
+                if event.key == pg.K_RIGHT:
+                    self.player.right = False
+                elif event.key == pg.K_LEFT:
+                    self.player.left = False
+
+            elif event.type == self.biggerFish.SPAWN_EVENT:  # TODO change to elif
+                self._spawn_enemies()
+
+    def update(self):
+        self.player.update()
+        for enem in self.enemies:  # Can be reduced with sprite.group
+            enem.update()
+        for enem in self.enemies.copy():  # deleting enemies
+            if enem.rect.midbottom[1] >= self.biggerFish.settings.screen_height + 150:
+                self.enemies.remove(enem)
+        self._collision_general()
+
+
+
+    def render(self, screen):  # It sould take screen to render things
+        screen.fill(self.biggerFish.settings.bg_color)  # Redrawing the background each pass
+        self.current_bg_animation += 0.5
+        if self.current_bg_animation >= len(self.biggerFish.settings.bg_animation):
+             self.current_bg_animation = 0
+        self.bg_surface = self.biggerFish.settings.bg_animation[int(self.current_bg_animation)]
+        screen.blit(self.bg_surface, [0, 0])
+
+        # Draw enemies in the screen (iterate over the list of enemies)
+        for enem in self.enemies:  # Can be reduced with sprite.group
+            enem.blit_enemy(bbox=False, hitbox=False)
+
+        # Draw player on the screen
+        self.player.blit_player(bbox=False, hitbox=False)  # drawing our fish on top of our background
+        #
+        # Draw score
+        screen.blit(self.biggerFish.settings.score_text, [0, 0])
+        self.biggerFish.display_text(screen, str(self.score), 20, 470, 10)
+
+    def _spawn_enemies(self):
+        self.enemies.append(enemy.Enemy(self.biggerFish))  # adding enemies
+
+    def _collision_general(self):
+        for enemy in self.enemies:
+            # If hitboxes rects are collided
+            if self.player.hitbox.colliderect(enemy.hitbox):  # if two rectangles overlap
+                # If they are kissing in head
+                if enemy.hitbox.bottom < self.player.hitbox.top + 10:
+                    # If player is thicker
+                    if enemy.hitbox.w < self.player.hitbox.w:
+                        self.sound_bite.play()
+                        self.enemies.remove(enemy)
+                        # self.counter.add_points(1)
+                        self.score+=1
+                    # GAME OVER
+                    else:
+                        self.manager.go_to(GameOver)
+                        self.sound_enemy.play()
+                        self.sound_game_over.play()
+                        new_score = self.score
+                        # if new_score > self.get_high_score():
+                        #     self.set_high_score(new_score)
+                        pg.mixer.music.stop()
+                        self.game_over = True
+                        self.go_main_menu = True
+
+class MenuScene(Scene):
+
+    def __init__(self, biggerFish):
+        self.biggerFish=biggerFish
+
+        # Load music and play it
+        self.sound_enemy = pg.mixer.Sound('resources/music/enemy_bite.mp3')
+        self.sound_game_over = pg.mixer.Sound('resources/music/game_over.mp3')
+        self.sound_enemy.play()
+        self.sound_game_over.play()
+
+
+    def handle_events(self):
+        for event in pg.event.get():
+            if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+                self.biggerFish.running = False
+
+            elif event.type == pg.KEYDOWN:  # Change Scene to Game if enter is pressed
                 if event.key == pg.K_RETURN or event.key == pg.K_KP_ENTER:
-                    self.manager.go_to(MenuScene())
+                    self.manager.go_to(GameScene(self.biggerFish))
+
+    def update(self):
+
+
+    def render(self, screen): # It sould take screen to render things
+        print("uh-oh, you didn't override this in the child class")
+        screen.blit(self.main_menu_surface, [0, 0])
+        screen.blit(self.main_menu_text, [0,0])
