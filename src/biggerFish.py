@@ -73,6 +73,7 @@ class BiggerFish:
 
             # GAME OVER LOOP FOR A COUPLE OF SECS
             wait = 0
+            # HERE is GAME OVER scene
             while self.game_over == True:
                 self.screen.blit(self.settings.game_over_img, [0, 0])
                 self.clock.tick(60)
@@ -450,22 +451,23 @@ class GameScene(Scene):
                         self.score+=1
                     # GAME OVER
                     else:
-                        self.manager.go_to(GameOver)
-                        self.sound_enemy.play()
-                        self.sound_game_over.play()
-                        new_score = self.score
-                        # if new_score > self.get_high_score():
-                        #     self.set_high_score(new_score)
-                        pg.mixer.music.stop()
-                        self.game_over = True
-                        self.go_main_menu = True
+                        self.manager.go_to(GameOver(self.biggerFish))
+                        # self.sound_enemy.play()
+                        # self.sound_game_over.play()
+                        # new_score = self.score
+                        # # if new_score > self.get_high_score():
+                        # #     self.set_high_score(new_score)
+                        # pg.mixer.music.stop()
+                        # self.game_over = True
+                        # self.go_main_menu = True
 
-class MenuScene(Scene):
+class GameOver(Scene):
 
     def __init__(self, biggerFish):
         self.biggerFish=biggerFish
 
         # Load music and play it
+        pg.mixer.music.stop()
         self.sound_enemy = pg.mixer.Sound('resources/music/enemy_bite.mp3')
         self.sound_game_over = pg.mixer.Sound('resources/music/game_over.mp3')
         self.sound_enemy.play()
@@ -482,9 +484,7 @@ class MenuScene(Scene):
                     self.manager.go_to(GameScene(self.biggerFish))
 
     def update(self):
-
+        pass
 
     def render(self, screen): # It sould take screen to render things
-        print("uh-oh, you didn't override this in the child class")
-        screen.blit(self.main_menu_surface, [0, 0])
-        screen.blit(self.main_menu_text, [0,0])
+        screen.blit(self.biggerFish.settings.game_over_img, [0, 0])
