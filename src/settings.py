@@ -58,7 +58,7 @@ class Settings:
 
         # ENEMIES
         """(speed, width, height, [x_hitbox_offset, y_hitbox_offset, x_hitbox_size, y_hitbox_size], path_R, path_S, path_L)"""
-        red_fish = EnemyType(       speed=random.uniform(0.75,1.25), width=48,  height= 48, hitbox_offset_and_size=[9,0,29,48], path_R="resources/images/enemies/red1.png", path_S="resources/images/enemies/red2.png", path_L="resources/images/enemies/red3.png")
+        red_fish = EnemyType(       speed=random.uniform(0.75,1.25), width=15,  height= 15, hitbox_offset_and_size=[1,0,14,15], path_R="resources/images/enemies/red1.png", path_S="resources/images/enemies/red2.png", path_L="resources/images/enemies/red3.png")
         green_fish = EnemyType(     speed=random.uniform(1.75,2.25), width=60,  height= 60, hitbox_offset_and_size=[12,0,35,60], path_R="resources/images/enemies/green1.png", path_S="resources/images/enemies/green2.png", path_L="resources/images/enemies/green3.png")
         brown_fish = EnemyType(     speed=random.uniform(1.75,2.25), width=80,  height= 80, hitbox_offset_and_size=[18,0,44,80], path_R="resources/images/enemies/brown1.png", path_S="resources/images/enemies/brown2.png", path_L="resources/images/enemies/brown3.png")
         white_fish = EnemyType(     speed=random.uniform(0.75,1.25), width=50,  height= 50, hitbox_offset_and_size=[11,0,30,50], path_R="resources/images/enemies/white1.png", path_S="resources/images/enemies/white2.png", path_L="resources/images/enemies/white3.png")
@@ -78,8 +78,16 @@ class Settings:
         self.enemies = [red_fish, green_fish, brown_fish, white_fish, blue_fish, ray_fish, x_blue_fish, x_pink_fish, blow_fish, sblow_fish, gray_fish, gray_shark, black_shark, greenorange_shark, pink_dolphin, blue_dolphin]
 
         # Player Evolution
-        """{num_of_point_to_evolve: [x_size, y_size]}"""
+        """{
+        threshold: {width, height, [x_hitbox_offset ,y_hitbox_offset , hitbox_width, hitbox_height, y_offset]}
+        threshold: {width, height, [x_hitbox_offset ,y_hitbox_offset , hitbox_width, hitbox_height, y_offset]}
+        threshold: {width, height, [x_hitbox_offset ,y_hitbox_offset , hitbox_width, hitbox_height, y_offset]}...
+        
+        }"""
         self.player_sizes = {
-            0: dict(width=30, height=30, hitbox_offset_and_size=[15,0,30,100], y_offset=0),
-            1: dict(width=60, height=60, hitbox_offset_and_size=[15,0,70,100], y_offset=40),
+            0:  dict(width=24, height=24, hitbox_offset_and_size=[0,0,24,24], y_offset=0),
+            1:  dict(width=35, height=35, hitbox_offset_and_size=[4,0,28,35], y_offset=5),
+            2:  dict(width=55, height=55, hitbox_offset_and_size=[10,0,35,55], y_offset=10),
+            3:  dict(width=90, height=90, hitbox_offset_and_size=[17,0,55,90], y_offset=25),
+
         }

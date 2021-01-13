@@ -37,7 +37,7 @@ class BiggerFish:
             self.manager.scene.handle_events()
             self.manager.scene.update()
             self.manager.scene.render(self.screen)
-            pg.display.flip() # TODO Maybe place it inside scene???? with decorators
+            pg.display.flip() # TODO Maybe place it inside scene???? with decorators AND change to .update()
 
             # PERFORMANCE, Don't limit frames if checking performance
             if check_performance:
