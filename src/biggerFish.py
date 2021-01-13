@@ -22,7 +22,6 @@ class BiggerFish:
 
         # Events ID generator, created to keep track of eventID
         # user event ID has to be between pg.USEREVENT and pg.NUMEVENTS
-        # TODO can be probably in scene
         self.event_id_generator = (id for id in range(pg.USEREVENT + 1, pg.NUMEVENTS))
 
 
@@ -35,19 +34,16 @@ class BiggerFish:
     def run_game(self, check_performance=False):
         while self.running:  # Start of the game's main loop
 
-            # SCENE concept introduced
             self.manager.scene.handle_events()
             self.manager.scene.update()
             self.manager.scene.render(self.screen)
-            pg.display.flip() # TODO Maybe place it inside scene????
-            # self.clock.tick(60)
+            pg.display.flip() # TODO Maybe place it inside scene???? with decorators
 
             # PERFORMANCE, Don't limit frames if checking performance
             if check_performance:
                 self._check_performance()
             else:
                 self.clock.tick(self.settings.FPS)
-
 
 
     def _check_performance(self, num_of_frame_to_average=100, printing=True, log=True):
@@ -87,7 +83,9 @@ class SceneManager():
     This class is uded to change scenes and hold currently used.
     """
     def __init__(self, biggerFish):
+        self.biggerFish= biggerFish
         self.go_to(MenuScene(biggerFish))
+        self.mama="go daddy go"
 
     def go_to(self, scene):
         self.scene = scene
@@ -95,17 +93,17 @@ class SceneManager():
 
 
 class Scene():
-    def __init__(self, biggerFish):
-        pass
+    # def __init__(self, biggerFish):
+    #     self.biggerFish = biggerFish
 
     def handle_events(self):
-        print("uh-oh, you didn't override this in the child class")
+       pass
 
     def update(self):
-        print("uh-oh, you didn't override this in the child class")
+        pass
 
     def render(self, screen): # It sould take screen to render things
-        print("uh-oh, you didn't override this in the child class")
+        pass
 
     def display_text(self, screen, text, font_size, x_pos, y_pos):
         font = pg.font.Font(pg.font.match_font('impact'), font_size)
@@ -205,7 +203,7 @@ class GameScene(Scene):
                 elif event.key == pg.K_LEFT:
                     self.player.left = False
 
-            elif event.type == self.SPAWN_EVENT:  # TODO change to elif
+            elif event.type == self.SPAWN_EVENT:
                 self._spawn_enemies()
 
     def update(self):
@@ -229,7 +227,7 @@ class GameScene(Scene):
 
         # Draw enemies in the screen (iterate over the list of enemies)
         for enem in self.enemies:  # Can be reduced with sprite.group
-            enem.blit_enemy(bbox=False, hitbox=False)
+            enem.blit_enemy(bbox=False, hitbox=True)
 
         # Draw player on the screen
         self.player.blit_player(bbox=False, hitbox=False)  # drawing our fish on top of our background
@@ -257,14 +255,6 @@ class GameScene(Scene):
                     else:
                         self._save_score()
                         self.manager.go_to(GameOver(self.biggerFish))
-                        # self.sound_enemy.play()
-                        # self.sound_game_over.play()
-                        # new_score = self.score
-                        # # if new_score > self.get_high_score():
-                        # #     self.set_high_score(new_score)
-                        # pg.mixer.music.stop()
-                        # self.game_over = True
-                        # self.go_main_menu = True
 
     def _display_text(self, screen, text, font_size, x_pos, y_pos):
         font = pg.font.Font(pg.font.match_font('impact'), font_size)
@@ -305,8 +295,6 @@ class GameOver(Scene):
                 if event.key == pg.K_RETURN or event.key == pg.K_KP_ENTER:
                     self.manager.go_to(MenuScene(self.biggerFish))
 
-    def update(self):
-        pass
 
     def render(self, screen): # It sould take screen to render things
         screen.blit(self.biggerFish.settings.game_over_img, [0, 0])

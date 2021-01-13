@@ -4,7 +4,7 @@ from random import randrange
 class Enemy():
     def __init__(self, game):
         rand_index = randrange(len(game.settings.enemies))
-        # This should generate enemy randomly 
+        # This should generate enemy randomly
         self.speed = game.settings.enemies[rand_index].speed
         # self.size = [24, 48] # width, height
         self.size = game.settings.enemies[rand_index].size
@@ -31,6 +31,7 @@ class Enemy():
                        self.rect.y + self.rect.h // 8,
                        self.rect.w - self.rect.w // 1.7,
                        self.rect.h - self.rect.h // 5
+
         )
 
     def update(self):
@@ -50,6 +51,7 @@ class Enemy():
             pg.draw.rect(self.screen, pg.Color('green'), self.rect, width=1)
         if hitbox:
             pg.draw.rect(self.screen, pg.Color('red'), self.hitbox, width=1)
+
         self.screen.blit(self.img, self.rect)  # blit() method draws the image on top
 
     def sprite_image(self):
