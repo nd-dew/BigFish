@@ -76,3 +76,4 @@ class Settings:
         blue_dolphin = EnemyType(   speed=random.uniform(3.75,4.25), width=110, height=150, hitbox_offset_and_size=[30,0,50,149], path_R="resources/images/enemies/dolphinblue1.png", path_S="resources/images/enemies/dolphinblue2.png", path_L="resources/images/enemies/dolphinblue3.png")
 
         self.enemies = [red_fish, green_fish, brown_fish, white_fish, blue_fish, ray_fish, x_blue_fish, x_pink_fish, blow_fish, sblow_fish, gray_fish, gray_shark, black_shark, greenorange_shark, pink_dolphin, blue_dolphin]
+
