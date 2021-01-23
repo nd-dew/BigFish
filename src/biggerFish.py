@@ -7,6 +7,16 @@ import time
 
 logging.basicConfig(filename='resources/logs/timeOfOneLoop.log', level=logging.INFO)
 
+"""
+BiggerFish class is a class thanks to which game instance can be created. It contains, unifies and uses the classes
+from all of the other game files (enemy.py, settings.py player.py). It runs the game in a loop and makes use of different classes to setup the game (Settings Class), 
+create the player (Player Class) and the enemies as well (Enemy Class). Also, this class handles events triggered by 
+different conditions (for example when keyboard keys are pressed or when some timers get activated).
+
+    Attributes
+    ----------
+"""
+
 class BiggerFish:
     def __init__(self):
         pg.init()
@@ -24,12 +34,11 @@ class BiggerFish:
         # user event ID has to be between pg.USEREVENT and pg.NUMEVENTS
         self.event_id_generator = (id for id in range(pg.USEREVENT + 1, pg.NUMEVENTS))
 
+        # Scenes MANAGER
+        self.manager = SceneManager(self)
 
         # Setting the boolean that handles the running of the game and the loop inside the main menu
-        self.running = True #loop inside game
-
-        # Scenes MANAGER
-        self.manager= SceneManager(self)
+        self.running = True # loop inside game
 
     def run_game(self, check_performance=False):
         while self.running:  # Start of the game's main loop
@@ -80,12 +89,12 @@ class BiggerFish:
 
 class SceneManager():
     """
-    This class is uded to change scenes and hold currently used.
+    This class is used to change scenes and hold currently used.
     """
     def __init__(self, biggerFish):
-        self.biggerFish= biggerFish
+        self.biggerFish = biggerFish
         self.go_to(MenuScene(biggerFish))
-        self.mama="go daddy go"
+        self.mama ="go daddy go"
 
     def go_to(self, scene):
         self.scene = scene
@@ -97,12 +106,12 @@ class Scene():
     #     self.biggerFish = biggerFish
 
     def handle_events(self):
-       pass
+        pass
 
     def update(self):
         pass
 
-    def render(self, screen): # It sould take screen to render things
+    def render(self, screen): # It should take screen to render things
         pass
 
     def display_text(self, screen, text, font_size, x_pos, y_pos):
@@ -114,15 +123,15 @@ class Scene():
 
     def read_highscore(self):
         with open("resources/logs/score", 'r') as f:
-            previous_score= int(f.readline())
+            previous_score = int(f.readline())
         return previous_score
 
 class MenuScene(Scene):
 
     def __init__(self, biggerFish):
         # Load music and play it in a loop
-        self.biggerFish=biggerFish
-        self.music= pg.mixer.music.load("resources/music/casimps1_-_Fishes_in_the_Sea.mp3")
+        self.biggerFish = biggerFish
+        self.music = pg.mixer.music.load("resources/music/casimps1_-_Fishes_in_the_Sea.mp3")
         pg.mixer.music.play(-1)
         # Load BG animations
         self.main_menu_animation = []
@@ -230,7 +239,7 @@ class GameScene(Scene):
         screen.blit(self.bg_surface, [0, 0])
 
         # Draw enemies in the screen (iterate over the list of enemies)
-        for enem in self.enemies:  # Can be reduced with sprite.group
+        for enem in self.enemies:
             enem.blit_enemy(bbox=False, hitbox=True)
 
         # Draw player on the screen
