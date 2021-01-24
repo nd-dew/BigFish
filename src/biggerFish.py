@@ -59,7 +59,10 @@ class BiggerFish:
         """
         The run_game method uses an instance of SceneManager class that helps managing transitions between scenes.
         One scene class was created for each of the three scenes necessary: MenuScene, GameScene and GameOver.
-       TODO: add attr
+
+        Parameters
+        ----------
+        check_performance : boolean
         """
         while self.running:  # Start of the game's main loop
 
@@ -194,7 +197,20 @@ class Scene():
 class MenuScene(Scene):
     """
     Initial scene of the main menu with the highest score displayed, video animation and music.
+    Attributes
+    ----------
+    biggerFish : biggerFish class,
+        instance of the game class to use setting
+    music : Pygame mixer music
+        chosen music played in mp3
+    main_menu_animation : list
+        list of images creating an animation
+    current_main_menu_animation : Pygame image
+        current animation image
+    score : int
+        current highest score loaded from text file
     """
+
     def __init__(self, biggerFish):
         # Load music and play it in a loop
         self.biggerFish = biggerFish
@@ -217,6 +233,11 @@ class MenuScene(Scene):
         self.score = self.read_highscore()
 
     def handle_events(self):
+        """
+            Method checking for the events and executing task based on these events.
+            While pressing certain keys, game running can be set to False; GameScene can be change to start the actual
+            GameScene; or Debug window can be initiated.
+        """
         for event in pg.event.get():
             if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 self.biggerFish.running = False
@@ -229,12 +250,23 @@ class MenuScene(Scene):
                     self.manager.go_to(DebugHitboxScene(self.biggerFish))
 
     def update(self):
+        """
+        Method updating background main menu animation.
+        """
         self.current_main_menu_animation += 0.4
         if self.current_main_menu_animation >= len(self.main_menu_animation):
             self.current_main_menu_animation = 0
         self.main_menu_surface = self.main_menu_animation[int(self.current_main_menu_animation)]
 
-    def render(self, screen):  # It should take screen to render things
+    def render(self, screen):
+        """
+        Method rendering graphical representation of the background animations and the score text field into the
+        game window.
+
+        Parameters
+        ----------
+        screen : Pygame image
+        """
         screen.blit(self.main_menu_surface, [0, 0])
         screen.blit(self.main_menu_text, [0, 0])
         self.display_text(screen, str(self.score), 20, 470, 10)
@@ -297,6 +329,11 @@ class GameScene(Scene):
         self.sound_start.play()
 
     def handle_events(self):
+        """
+            Method checking for the events and executing task based on these events.
+            While pressing certain keys, game running can be set to False; movement of the player fish can be changed;
+            or random enemies spawning can be initiated.
+        """
         for event in pg.event.get():
             if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 self.biggerFish.running = False
@@ -317,8 +354,14 @@ class GameScene(Scene):
                 self._spawn_enemies()
 
     def update(self):
+        """
+        Method updates for player update method to change its position based on events; similarly calls an update
+        method of the Enemy class for each of the enemy in the list of active enemies; list of enemies is also
+        regularly checked and non-active enemies are deleted. Updated method also call of the collision helper method
+        to identify collisions between player and enemies.
+        """
         self.player.update(self.score)
-        for enem in self.enemies:  # Can be reduced with sprite.group
+        for enem in self.enemies:
             enem.update()
         for enem in self.enemies.copy():  # deleting enemies
             if enem.rect.midbottom[1] >= self.biggerFish.settings.screen_height + 150:
@@ -326,6 +369,16 @@ class GameScene(Scene):
         self._collision_general()
 
     def render(self, screen):  # It should take screen to render things
+        """
+        Method taking care of the graphical rendering of the animations into the background, each of the enemies (with
+        hitbox rectangles if desired) and the player (with hitbox rectangle if desired) into the game window.
+        Additional score text field is displayed on top as well.
+
+        Parameters
+        ----------
+        screen : Pygame image
+            updating game screen
+        """
         screen.fill(self.biggerFish.settings.bg_color)  # Redrawing the background each pass
         self.current_bg_animation += 0.5
         if self.current_bg_animation >= len(self.biggerFish.settings.bg_animation):
@@ -344,6 +397,9 @@ class GameScene(Scene):
         self.display_text(screen, str(self.score), 20, 470, 10)
 
     def _spawn_enemies(self):
+        """
+        Method appending the list of enemies while reating the new instances of the Enemy class.
+        """
         self.enemies.append(enemy.Enemy(self.biggerFish))  # adding enemies
 
     def _collision_general(self):
@@ -367,6 +423,21 @@ class GameScene(Scene):
                         self.manager.go_to(GameOver(self.biggerFish))
 
     def _display_text(self, screen, text, font_size, x_pos, y_pos):
+        """
+        This method is used to blit text on the screen at choosen postion
+        Parameters
+        ----------
+        screen : pygame.surface,
+            surface to blit onto
+        text :  str,
+            characters to be blitted
+        font_size : int,
+            size of the font
+        x_pos : int,
+            x position on the surface (lefttop corner)
+        y_pos : int,
+            y position on the surface (lefttop corner)
+        """
         font = pg.font.Font(pg.font.match_font('impact'), font_size)
         text_img = font.render(text, True, (0, 0, 0))
         text_rect = text_img.get_rect()
@@ -417,6 +488,15 @@ class DebugHitboxScene(Scene):
     player but it has multiple versions/levels)
     It can be accesed with F12 key in main menu, and left with pressing enter, arrow keys will change
     player level.
+
+    Attributes
+    ----------
+    biggerFish : BiggerFish class
+    score : int
+    generated_artificial_enemies : list
+        list of artificial enemies for debug purposes
+    player : Player class
+        player class instance
     """
 
     def __init__(self, biggerFish):
@@ -441,6 +521,10 @@ class DebugHitboxScene(Scene):
         self.player = player.Player(self.biggerFish)
 
     def handle_events(self):
+        """
+            Method checking for the events and executing task based on these events.
+            While pressing certain keys, game running can be set to False; manual adding of score.
+        """
         for event in pg.event.get():
             if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 self.biggerFish.running = False
@@ -460,7 +544,15 @@ class DebugHitboxScene(Scene):
             r.update(debugMode=True)
         self.player.update(self.score)
 
-    def render(self, screen):  # It sould take screen to render things
+    def render(self, screen):
+        """
+        Rendering screen image, artificial enemies with hitboxes rectangles, game clock, player surface and score
+        text field into the game window.
+
+        Parameters
+        ----------
+        screen : pygame image
+        """
         previous_rect = pg.Rect(0, 0, 40, 3)
         previous_rect.topleft = screen.get_rect().topleft
         screen.fill((0, 0, 255))
