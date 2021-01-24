@@ -101,7 +101,6 @@ class SceneManager():
     def __init__(self, biggerFish):
         self.biggerFish = biggerFish
         self.go_to(MenuScene(biggerFish))
-        self.mama = "go daddy go"
 
     def go_to(self, scene):
         self.scene = scene
@@ -245,7 +244,7 @@ class GameScene(Scene):
                 self.enemies.remove(enem)
         self._collision_general()
 
-    def render(self, screen):  # It sould take screen to render things
+    def render(self, screen):  # It should take screen to render things
         screen.fill(self.biggerFish.settings.bg_color)  # Redrawing the background each pass
         self.current_bg_animation += 0.5
         if self.current_bg_animation >= len(self.biggerFish.settings.bg_animation):
