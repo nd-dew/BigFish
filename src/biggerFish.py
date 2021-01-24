@@ -18,9 +18,20 @@ class BiggerFish:
 
     Attributes
     ----------
+    settings : Settings class
+        settings attributes imported as an instance of Settings class
     screen : (int, int)
-
-    TODO: add rest of the attr
+        game window size
+    icon : Pygame image
+        icon image for the game window
+    clock : Pygame time clock
+        clock instance to track time
+    event_id_generator : list
+        for tracking event ids
+    manager : SceneManager class
+        SceneManager instance for scenes control
+    running : boolean
+        True when game is set tu run
     """
     def __init__(self):
         pg.init()

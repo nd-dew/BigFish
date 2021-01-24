@@ -59,7 +59,7 @@ class Enemy():
 
         Parameters
         ----------
-        debugMode
+        debugMode : boolean
 
         """
         if not debugMode:
@@ -90,7 +90,7 @@ class Enemy():
         Parameters
         ----------
         bbox : boolean
-        hitbox
+        hitbox : boolean
 
         Returns
         -------

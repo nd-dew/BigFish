@@ -119,7 +119,7 @@ class Player():
         reached_threshold = 0
         for threshold in self.biggerFish.settings.player_sizes.keys():
             if score >= threshold:
-                reached_threshold=threshold
+                reached_threshold = threshold
         self.rect.w = self.biggerFish.settings.player_sizes[reached_threshold]['width']
         self.rect.h = self.biggerFish.settings.player_sizes[reached_threshold]['height']
         self.rect.bottom = self.screen_rect.bottom + self.biggerFish.settings.player_sizes[reached_threshold]['y_offset']
