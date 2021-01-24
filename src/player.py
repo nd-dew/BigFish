@@ -12,28 +12,24 @@ class Player():
     ----------
     speed : int
         How fast player moves per tick
+    biggerFish: BiggerFish
+        gotten game class
     screen : pg.surface
         local copy of main screen used in main game class
     screen_rect: pg.Rect
         rect structure derived from main screen, used in boundary case calculations
-    all_sizes_sprites: {int: {str: pg.Surface, str: pg.Surface, str: pg.Surface}... }
-       Dict containing all of possible images of player. Calculated in the beginning of the game.
-       Data Structure Explained:
-           {level_1 : dict_with_sprites, level_2 : dict_with_sprites, level_3 : dict_with_sprites...}
-            it is a dictionary of dictionaries. Keys in outer dictionary are integers (so far). While in the inner dicts
-            called in here 'dict_with_sprites' we find rescaled sprites.
-            Structure of inner dict called in here dict_with_sprites looks like this:
-            {'steady': pg.Surface, 'tailRight': pg.Surface, 'tailLeft': pg.Surface}
     sprites : {'steady': pg.Surface, 'tailRight': pg.Surface, 'tailLeft': pg.Surface}
         current set of sprites used to display animations.
     img : pg.Surface
         current image to blit on screen
     rect : pg.Rect
         rect corresponding to self.img, used to describe position in bliting
-    direction : str
-        deprecated, Used in past to represent current state of player
-    currentState : State
-        instance of imported enum struct, describes current state in which player is
+    right : bool
+        should player be moving to the right
+    left : bool
+        should player be moving to the left
+    hitbox : pg.Rect
+        rect corresponding to player hitbox, used to calculate events
     TODO update above documentation
     """
 
