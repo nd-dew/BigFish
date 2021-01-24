@@ -10,7 +10,7 @@ class Settings:
     ----------
     screen_width : int
         horizontal size of main game screen in pixels
-    screen_height : bool
+    screen_height : int
         vertical size of main game screen in pixels
     screen_size : (int, int)
         current state of left arrow key True if pressed
@@ -82,12 +82,10 @@ class Settings:
         threshold: {width, height, [x_hitbox_offset ,y_hitbox_offset , hitbox_width, hitbox_height, y_offset]}
         threshold: {width, height, [x_hitbox_offset ,y_hitbox_offset , hitbox_width, hitbox_height, y_offset]}
         threshold: {width, height, [x_hitbox_offset ,y_hitbox_offset , hitbox_width, hitbox_height, y_offset]}...
-        
         }"""
         self.player_sizes = {
             0:  dict(width=24, height=24, hitbox_offset_and_size=[0,0,24,24], y_offset=0),
             1:  dict(width=35, height=35, hitbox_offset_and_size=[4,0,28,35], y_offset=5),
             2:  dict(width=55, height=55, hitbox_offset_and_size=[10,0,35,55], y_offset=10),
             3:  dict(width=90, height=90, hitbox_offset_and_size=[17,0,55,90], y_offset=25),
-
         }
