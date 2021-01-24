@@ -4,7 +4,10 @@ import random
 
 class Settings:
     """
-    Class designed to hold all constants in the game. maybe more?
+    Class designed to hold all constants in the game. This includes Basic game window parameters, graphical image
+    animations (for background, player sprite images, enemies sprite images). Setting of frames per seconds. This
+    class also includes a list of different enemy types with all of their attributes (speed, size, image path) as
+    well as a dictionary of different evolution steps of the player.
 
      Attributes
     ----------
@@ -18,8 +21,25 @@ class Settings:
         number of maximum frames per second
     bg_color: (int, int, int)
         depricated rgb background color
+    bg_animation : list
+        list of background animation images
+    score_text : pygame image
+        image used underneath the score text field
+    game_over_img : pygame image
+        image used for gameover Scene
     logo_path: str
         path to logo image
+    player_steady : String
+        path to image with a steady tail of the player
+    player_tailRight : String
+        path to image with a left curved tail of the player
+    player_tailLeft : String
+        path to image with a right curved tail of the player
+    enemies : list
+        list of enemy types
+    player_sizes : dictionary
+        dictionary of player sizes
+
     """
 
     def __init__(self):
