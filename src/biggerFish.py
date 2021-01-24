@@ -19,6 +19,8 @@ class BiggerFish:
     Attributes
     ----------
     screen : (int, int)
+
+    TODO: add rest of the attr
     """
     def __init__(self):
         pg.init()
@@ -46,6 +48,7 @@ class BiggerFish:
         """
         The run_game method uses an instance of SceneManager class that helps managing transitions between scenes.
         One scene class was created for each of the three scenes necessary: MenuScene, GameScene and GameOver.
+       TODO: add attr
         """
         while self.running:  # Start of the game's main loop
 
@@ -96,10 +99,13 @@ class BiggerFish:
 class SceneManager():
     """
     This class is used to change scenes and hold currently used.
+    Attributes
+    ----------
+    scene : Scene
+        currently displayed scene
     """
 
     def __init__(self, biggerFish):
-        self.biggerFish = biggerFish
         self.go_to(MenuScene(biggerFish))
 
     def go_to(self, scene):
@@ -109,18 +115,52 @@ class SceneManager():
 
 class Scene():
     """
+    This is parent class for all scenes. All scenes has to inherit Scene() class
     The instances of a Scene class are used as a general variable for SceneManager.
+
+    NOTE: External modification: Each Scene gets one attribute externaly via SceneManager/go_to method
+    it allows to access manager methods to change current scene:
+
+    Non standard Parameters:
+    ----------
+    manager: SceneManager, added externally, more info in SceneManager.go_to method
+
     """
     def handle_events(self):
+        """
+        Method required in all scenes, it is supposed to detect all the pygame events and take
+        actions accordingly.
+        """
         pass
 
     def update(self):
+        """
+        Method required in all scenes, it performs std update actions on corresponding scene objects.
+        """
         pass
 
-    def render(self, screen):  # It should take screen to render things
+    def render(self, screen):
+        """
+        Method required in all scenes, perform all blit action to the pygame graphical buffer.
+        """
         pass
 
     def display_text(self, screen, text, font_size, x_pos, y_pos):
+        """
+        This method is used to blit text on the screen at choosen postion
+        Parameters
+        ----------
+        screen : pygame.surface,
+            surface to blit onto
+        text :  str,
+            characters to be blitted
+        font_size : int,
+            size of the font
+        x_pos : int,
+            x position on the surface (lefttop corner)
+        y_pos : int,
+            y position on the surface (lefttop corner)
+        """
         font = pg.font.Font(pg.font.match_font('impact'), font_size)
         text_img = font.render(text, True, (0, 0, 0))
         text_rect = text_img.get_rect()
@@ -128,6 +168,13 @@ class Scene():
         screen.blit(text_img, text_rect)
 
     def read_highscore(self):
+        """
+        Function provides std way of reading logged highscore
+        Returns
+        -------
+        previous_score : int
+            logged highscore
+        """
         with open("resources/logs/score", 'r') as f:
             previous_score = int(f.readline())
         return previous_score
@@ -187,6 +234,32 @@ class GameScene(Scene):
     Main game scene handling the player instance, keeping a list of enemies created, spawning of enemies, checking
     the key press events, updating the positions of elements, collisions, score counter, rendering and displaying
     of the elements into the game window.
+    Attributes
+    ----------
+    biggerFish : biggerFish class,
+        instance of the game class to use setting
+    score :  int,
+        current score
+    player : Player class,
+        instance of the Player class to use its properties
+    enemies : list,
+        list of currently displayed enemies
+    spawn_rate : int,
+        spawn rate of the enemy, in ms
+    SPAWN_EVENT: int
+        generated event id
+    current_bg_animation: int
+        holds currently displayed bg image
+    bg_surface: pygame.surface
+        holds currently displayed surface
+    sound_game_over : pg.mixer.Sound
+        object to hold game over sound
+    sound_bite : pg.mixer.Sound
+        object to hold bite sound
+    sound_enemy : pg.mixer.Sound
+        object to hold enemy sound
+    sound_start : pg.mixer.Sound
+        object to hold start game sound
     """
     def __init__(self, biggerFish):
         self.biggerFish = biggerFish
@@ -213,9 +286,6 @@ class GameScene(Scene):
         self.sound_start.play()
 
     def handle_events(self):
-        """
-        Method to check events of keys pressed and spawning event
-        """
         for event in pg.event.get():
             if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 self.biggerFish.running = False
@@ -331,6 +401,12 @@ class GameOver(Scene):
 
 
 class DebugHitboxScene(Scene):
+    """
+    Scene to see all of the bounding boxes, and hitboxes of all enemies and all players (there is one
+    player but it has multiple versions/levels)
+    It can be accesed with F12 key in main menu, and left with pressing enter, arrow keys will change
+    player level.
+    """
 
     def __init__(self, biggerFish):
         self.biggerFish = biggerFish

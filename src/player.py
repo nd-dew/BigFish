@@ -34,6 +34,7 @@ class Player():
         deprecated, Used in past to represent current state of player
     currentState : State
         instance of imported enum struct, describes current state in which player is
+    TODO update above documentation
     """
 
     def __init__(self, game):
