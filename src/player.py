@@ -30,7 +30,6 @@ class Player():
         should player be moving to the left
     hitbox : pg.Rect
         rect corresponding to player hitbox, used to calculate events
-    TODO update above documentation
     """
 
     def __init__(self, game):
