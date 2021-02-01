@@ -125,4 +125,3 @@ class Player():
                 hitbox_offset_and_size[2],
                 hitbox_offset_and_size[3]
         )
-

@@ -109,7 +109,6 @@ class BiggerFish:
                     logging.info('{one_loop_time=: .6f} s {(1 / one_loop_time): .1f} FPS possible')
                 self.loopNumber = 0
 
-
 class SceneManager():
     """
     This class is used to change scenes and hold currently used.
@@ -125,7 +124,6 @@ class SceneManager():
     def go_to(self, scene):
         self.scene = scene
         self.scene.manager = self
-
 
 class Scene():
     """

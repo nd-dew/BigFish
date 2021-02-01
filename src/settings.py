@@ -78,21 +78,21 @@ class Settings:
 
         # ENEMIES
         """(speed, width, height, [x_hitbox_offset, y_hitbox_offset, x_hitbox_size, y_hitbox_size], path_R, path_S, path_L)"""
-        red_fish = EnemyType(       speed=random.uniform(0.75,1.25), width=15,  height= 15, hitbox_offset_and_size=[1,0,14,15], path_R="resources/images/enemies/red1.png", path_S="resources/images/enemies/red2.png", path_L="resources/images/enemies/red3.png")
-        green_fish = EnemyType(     speed=random.uniform(1.75,2.25), width=60,  height= 60, hitbox_offset_and_size=[12,0,35,60], path_R="resources/images/enemies/green1.png", path_S="resources/images/enemies/green2.png", path_L="resources/images/enemies/green3.png")
-        brown_fish = EnemyType(     speed=random.uniform(1.75,2.25), width=80,  height= 80, hitbox_offset_and_size=[18,0,44,80], path_R="resources/images/enemies/brown1.png", path_S="resources/images/enemies/brown2.png", path_L="resources/images/enemies/brown3.png")
-        white_fish = EnemyType(     speed=random.uniform(0.75,1.25), width=50,  height= 50, hitbox_offset_and_size=[11,0,30,50], path_R="resources/images/enemies/white1.png", path_S="resources/images/enemies/white2.png", path_L="resources/images/enemies/white3.png")
-        blue_fish = EnemyType(      speed=random.uniform(0.75,1.25), width=50,  height= 50, hitbox_offset_and_size=[13,0,27,50], path_R="resources/images/enemies/blue1.png", path_S="resources/images/enemies/blue2.png", path_L="resources/images/enemies/blue3.png")
-        ray_fish = EnemyType(       speed=random.uniform(2.75,3.25), width=100, height=100, hitbox_offset_and_size=[15,0,70,100], path_R="resources/images/enemies/ray1.png", path_S="resources/images/enemies/ray2.png", path_L="resources/images/enemies/ray3.png")
-        x_blue_fish = EnemyType(    speed=random.uniform(2.75,3.25), width=60,  height= 60, hitbox_offset_and_size=[16,0,28,60], path_R="resources/images/enemies/xblue1.png", path_S="resources/images/enemies/xblue2.png", path_L="resources/images/enemies/xblue3.png")
-        x_pink_fish = EnemyType(    speed=random.uniform(2.75,3.25), width=60,  height= 60, hitbox_offset_and_size=[16,0,25,60], path_R="resources/images/enemies/xpink1.png", path_S="resources/images/enemies/xpink2.png", path_L="resources/images/enemies/xpink3.png")
+        red_fish = EnemyType(       speed=random.uniform(4.75,5.25), width=15,  height= 15, hitbox_offset_and_size=[1,0,14,15], path_R="resources/images/enemies/red1.png", path_S="resources/images/enemies/red2.png", path_L="resources/images/enemies/red3.png")
+        green_fish = EnemyType(     speed=random.uniform(1.75,2.25), width=40,  height= 60, hitbox_offset_and_size=[5,0,30,60], path_R="resources/images/enemies/green1.png", path_S="resources/images/enemies/green2.png", path_L="resources/images/enemies/green3.png")
+        brown_fish = EnemyType(     speed=random.uniform(2.75,3.25), width=40,  height= 50, hitbox_offset_and_size=[4,0,30,50], path_R="resources/images/enemies/brown1.png", path_S="resources/images/enemies/brown2.png", path_L="resources/images/enemies/brown3.png")
+        white_fish = EnemyType(     speed=random.uniform(3.75,4.25), width=20,  height= 20, hitbox_offset_and_size=[2,0,20,20], path_R="resources/images/enemies/white1.png", path_S="resources/images/enemies/white2.png", path_L="resources/images/enemies/white3.png")
+        blue_fish = EnemyType(      speed=random.uniform(3.75,4.25), width=30,  height= 30, hitbox_offset_and_size=[4,0,24,30], path_R="resources/images/enemies/blue1.png", path_S="resources/images/enemies/blue2.png", path_L="resources/images/enemies/blue3.png")
+        ray_fish = EnemyType(       speed=random.uniform(2.75,3.25), width=80, height=100, hitbox_offset_and_size=[15,0,50,100], path_R="resources/images/enemies/ray1.png", path_S="resources/images/enemies/ray2.png", path_L="resources/images/enemies/ray3.png")
+        x_blue_fish = EnemyType(    speed=random.uniform(2.75,3.25), width=60,  height= 60, hitbox_offset_and_size=[13,0,35,60], path_R="resources/images/enemies/xblue1.png", path_S="resources/images/enemies/xblue2.png", path_L="resources/images/enemies/xblue3.png")
+        x_pink_fish = EnemyType(    speed=random.uniform(2.75,3.25), width=60,  height= 60, hitbox_offset_and_size=[13,0,35,60], path_R="resources/images/enemies/xpink1.png", path_S="resources/images/enemies/xpink2.png", path_L="resources/images/enemies/xpink3.png")
         blow_fish = EnemyType(      speed=random.uniform(0.75,1.25), width=50,  height= 50, hitbox_offset_and_size=[8,0,30,50], path_R="resources/images/enemies/blow1.png", path_S="resources/images/enemies/blow2.png", path_L="resources/images/enemies/blow3.png")
         sblow_fish = EnemyType(     speed=random.uniform(2.75,3.25), width=60,  height= 60, hitbox_offset_and_size=[15,0,28,60], path_R="resources/images/enemies/sblow1.png", path_S="resources/images/enemies/sblow2.png", path_L="resources/images/enemies/sblow3.png")
         gray_fish = EnemyType(      speed=random.uniform(2.75,3.25), width=80,  height= 80, hitbox_offset_and_size=[20,0,40,78], path_R="resources/images/enemies/gray1.png", path_S="resources/images/enemies/gray2.png", path_L="resources/images/enemies/gray3.png")
         gray_shark = EnemyType(     speed=random.uniform(3.75,4.25), width=110, height=150, hitbox_offset_and_size=[30,0,50,149], path_R="resources/images/enemies/sharkgray1.png", path_S="resources/images/enemies/sharkgray2.png", path_L="resources/images/enemies/sharkgray3.png")
-        black_shark = EnemyType(    speed=random.uniform(5.75,6.25), width=160, height=200, hitbox_offset_and_size=[37,0,80,195], path_R="resources/images/enemies/sharkblack1.png", path_S="resources/images/enemies/sharkblack2.png", path_L="resources/images/enemies/sharkblack3.png")
-        greenorange_shark=EnemyType(speed=random.uniform(3.75,4.25), width=110, height=150, hitbox_offset_and_size=[30,0,50,147], path_R="resources/images/enemies/sharkgreenor1.png", path_S="resources/images/enemies/sharkgreenor2.png", path_L="resources/images/enemies/sharkgreenor3.png")
-        pink_dolphin = EnemyType(   speed=random.uniform(4.75,5.25), width=110, height=150, hitbox_offset_and_size=[30,0,50,149], path_R="resources/images/enemies/dolphinpink1.png", path_S="resources/images/enemies/dolphinpink2.png", path_L="resources/images/enemies/dolphinpink3.png")
+        black_shark = EnemyType(    speed=random.uniform(6.75,7.25), width=100, height=200, hitbox_offset_and_size=[20,0,60,200], path_R="resources/images/enemies/sharkblack1.png", path_S="resources/images/enemies/sharkblack2.png", path_L="resources/images/enemies/sharkblack3.png")
+        greenorange_shark=EnemyType(speed=random.uniform(3.75,4.25), width=90, height=140, hitbox_offset_and_size=[25,0,40,140], path_R="resources/images/enemies/sharkgreenor1.png", path_S="resources/images/enemies/sharkgreenor2.png", path_L="resources/images/enemies/sharkgreenor3.png")
+        pink_dolphin = EnemyType(   speed=random.uniform(4.75,5.25), width=80, height=120, hitbox_offset_and_size=[20,0,40,120], path_R="resources/images/enemies/dolphinpink1.png", path_S="resources/images/enemies/dolphinpink2.png", path_L="resources/images/enemies/dolphinpink3.png")
         blue_dolphin = EnemyType(   speed=random.uniform(3.75,4.25), width=110, height=150, hitbox_offset_and_size=[30,0,50,149], path_R="resources/images/enemies/dolphinblue1.png", path_S="resources/images/enemies/dolphinblue2.png", path_L="resources/images/enemies/dolphinblue3.png")
 
         self.enemies = [red_fish, green_fish, brown_fish, white_fish, blue_fish, ray_fish, x_blue_fish, x_pink_fish, blow_fish, sblow_fish, gray_fish, gray_shark, black_shark, greenorange_shark, pink_dolphin, blue_dolphin]
@@ -105,7 +105,7 @@ class Settings:
         }"""
         self.player_sizes = {
             0:  dict(width=24, height=24, hitbox_offset_and_size=[0,0,24,24], y_offset=0),
-            3:  dict(width=35, height=35, hitbox_offset_and_size=[4,0,28,35], y_offset=5),
+            2:  dict(width=35, height=35, hitbox_offset_and_size=[4,0,28,35], y_offset=5),
             6:  dict(width=55, height=55, hitbox_offset_and_size=[10,0,35,55], y_offset=10),
-            9:  dict(width=90, height=90, hitbox_offset_and_size=[17,0,55,90], y_offset=25),
+            13:  dict(width=90, height=90, hitbox_offset_and_size=[17,0,55,90], y_offset=25),
         }
