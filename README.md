@@ -26,7 +26,7 @@ Game created in python, where you have to eat smaller fishes to grow and survive
 pip -m main
 ```
 
-[![Video installation tutorial](https://img.youtube.com/vi/youtu.be/Skv75mWkEvI/0.jpg)](https://youtu.be/Skv75mWkEvI)
+[![Video installation tutorial](docs/yt_teaser.png)](https://youtu.be/Skv75mWkEvI)
 
 
 
