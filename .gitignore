@@ -1,3 +1,12 @@
 # ignore virtual environment 
 venv/
+
+# ignore ide files
 .idea/
+.vscode
+
+# ignore movies
+*.mkv
+
+# ignore python caches
+src/__pycache__
